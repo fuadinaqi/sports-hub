@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+  <% include ./partials/head %>
+  <body>
+    <h2>Agenda</h2>
+    <a href="/agendas/add">Add Agenda</a>
+    <br>
+    <table>
+      <tr>
+        <th>NO</th>
+        <th>ID</th>
+        <th>NAME</th>
+        <th>PLACE</th>
+        <th>DATE</th>
+        <th>TIME</th>
+        <th>MAX PLAYER</th>
+        <th>ACTION</th>
+      </tr>
+
+      <% let count = 1 %>
+      <% rowAgendas.forEach(agenda => { %>
+      <tr>
+        <td><%= count++ %></td>
+        <td><%= agenda.id %></td>
+        <td><%= agenda.name %></td>
+        <td><%= agenda.place %></td>
+        <td><%= agenda.date %></td>
+        <td><%= agenda.time %></td>
+        <td><%= agenda.max_player %></td>
+        <td>
+          <a href="/agendas/edit/<%= agenda.id  %>">Edit</a>
+          <a href="/agendas/delete/<%= agenda.id %>" onclick="return confirm (`Are you sure to delete this data?`)">Delete</a>
+        </td>
+      </tr>
+      <% }) %>
+    </table>
+  </body>
+</html>
