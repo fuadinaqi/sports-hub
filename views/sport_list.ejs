@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+  <% include ./partials/head %>
+  <body>
+    <h1>Sport's List</h1>
+    <a href="/sport_lists/add">Add Sport</a>
+    <br>
+    <table>
+      <tr>
+        <th>NO</th>
+        <th>ID</th>
+        <th>NAME</th>
+        <th>ACTION</th>
+      </tr>
+
+      <% let count = 1 %>
+      <% rowSportLists.forEach(sport => { %>
+      <tr>
+        <td><%= count++ %></td>
+        <td><%= sport.id %></td>
+        <td><%= sport.name %></td>
+        <td>
+          <a href="/sport_lists/edit/<%= sport.id %>">Edit</a>
+          <a href="/sport_lists/delete/<%= sport.id %>" onclick="return confirm (`Are you sure to delete this item?`)">Delete</a>
+        </td>
+      </tr>
+      <% }) %>
+    </table>
+  </body>
+</html>
