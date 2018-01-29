@@ -2,8 +2,10 @@ const express     = require('express')
 const router      = express.Router()
 const Model       = require('../models')
 
+const Agenda      = Model.Agenda
+
 router.get('/', (req, res) => {
-  Model.Agenda.findAll() // select all data agendas
+  Agenda.findAll() // select all data agendas
   .then(rowAgendas => {
     res.render('agenda', {
       rowAgendas : rowAgendas
@@ -27,7 +29,7 @@ router.post('/add', (req, res) => {
     time        : req.body.time,
     max_player  : req.body.max_player
   }
-  Model.Agenda.create(objCreate) //insert data agenda
+  Agenda.create(objCreate) //insert data agenda
   .then(() => {
     res.redirect('/agendas')
   })
@@ -38,7 +40,7 @@ router.post('/add', (req, res) => {
 
 router.get('/edit/:id', (req, res) => {
   let id = req.params.id
-  Model.Agenda.findById(id)
+  Agenda.findById(id)
   .then(dataAgenda => {
     res.render('agenda_edit', {
       dataAgenda : dataAgenda
@@ -58,7 +60,7 @@ router.post('/edit/:id', (req, res) => {
     time        : req.body.time,
     max_player  : req.body.max_player
   }
-  Model.Agenda.update(objEdit, { //update data agenda
+  Agenda.update(objEdit, { //update data agenda
     where: { id }
   })
   .then(() => {
@@ -71,7 +73,7 @@ router.post('/edit/:id', (req, res) => {
 
 router.get('/delete/:id', (req, res) => {
   let id = req.params.id
-  Model.Agenda.destroy({ //delete data agenda
+  Agenda.destroy({ //delete data agenda
     where : { id }
   })
   .then(() => {

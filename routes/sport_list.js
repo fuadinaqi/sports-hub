@@ -1,9 +1,10 @@
 const express     = require('express')
 const router      = express.Router()
 const Model       = require('../models')
+const SportLists  = Model.SportLists
 
 router.get('/', (req, res) => {
-  Model.SportLists.findAll() // select all data sport
+  SportLists.findAll() // select all data sport
   .then(rowSportLists => {
     res.render('sport_list', {
       rowSportLists : rowSportLists
@@ -22,7 +23,7 @@ router.post('/add', (req, res) => {
   let objCreate = {
     name        : req.body.name,
   }
-  Model.SportLists.create(objCreate) //insert data sport
+  SportLists.create(objCreate) //insert data sport
   .then(() => {
     res.redirect('/sport_lists')
   })
@@ -33,7 +34,7 @@ router.post('/add', (req, res) => {
 
 router.get('/edit/:id', (req, res) => {
   let id = req.params.id
-  Model.SportLists.findById(id)
+  SportLists.findById(id)
   .then(dataSportList => {
     res.render('sport_list_edit', {
       dataSportList : dataSportList
@@ -49,7 +50,7 @@ router.post('/edit/:id', (req, res) => {
   let objEdit = {
     name        : req.body.name,
   }
-  Model.SportLists.update(objEdit, { //update data sport
+  SportLists.update(objEdit, { //update data sport
     where: { id }
   })
   .then(() => {
@@ -62,7 +63,7 @@ router.post('/edit/:id', (req, res) => {
 
 router.get('/delete/:id', (req, res) => {
   let id = req.params.id
-  Model.SportLists.destroy({ //delete data sport
+  SportLists.destroy({ //delete data sport
     where : { id }
   })
   .then(() => {
