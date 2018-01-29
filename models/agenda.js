@@ -8,6 +8,11 @@ module.exports = (sequelize, DataTypes) => {
     max_player: DataTypes.INTEGER,
     SportListId: DataTypes.INTEGER
   })
+  Agenda.associate = function (models) {
+    // ...associate the models
+    Agenda.belongsTo(models.SportLists)
+    // Agenda.belongsToMany(models.Person, {through: 'peopleagendas'});
 
+  };
   return Agenda;
 };

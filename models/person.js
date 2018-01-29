@@ -8,6 +8,10 @@ module.exports = (sequelize, DataTypes) => {
     phone: DataTypes.STRING,
     password: DataTypes.STRING
   })
-
+  // Person.associate = function (models) {
+  //   // ...associate the models
+  //   Person.belongsToMany(models.Agenda, {through: 'peopleagendas'});
+  //
+  // };
   return Person;
 };

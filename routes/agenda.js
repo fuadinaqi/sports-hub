@@ -1,12 +1,17 @@
 const express     = require('express')
 const router      = express.Router()
 const Model       = require('../models')
-
+const SportList   = Model.SportLists
 const Agenda      = Model.Agenda
 
 router.get('/', (req, res) => {
-  Agenda.findAll() // select all data agendas
+  Agenda.findAll({
+    include: [
+      { model: Model.SportLists}
+    ]
+  }) // select all data agendas
   .then(rowAgendas => {
+    // res.send(rowAgendas)
     res.render('agenda', {
       rowAgendas : rowAgendas
     })
@@ -17,8 +22,9 @@ router.get('/', (req, res) => {
 })
 
 router.get('/add', (req, res) => {
-  res.render('agenda_add')
-  // sport id (list) nya belom
+  SportList.findAll().then(rowSportList => {
+    res.render('agenda_add', {rowSportList: rowSportList})
+  })
 })
 
 router.post('/add', (req, res) => {
@@ -27,7 +33,8 @@ router.post('/add', (req, res) => {
     place       : req.body.place,
     date        : req.body.date,
     time        : req.body.time,
-    max_player  : req.body.max_player
+    max_player  : req.body.max_player,
+    SportListId : req.body.sportListId
   }
   Agenda.create(objCreate) //insert data agenda
   .then(() => {
@@ -42,8 +49,15 @@ router.get('/edit/:id', (req, res) => {
   let id = req.params.id
   Agenda.findById(id)
   .then(dataAgenda => {
-    res.render('agenda_edit', {
-      dataAgenda : dataAgenda
+    SportList.findAll()
+    .then(dataSports => {
+      res.render('agenda_edit', {
+        dataAgenda : dataAgenda,
+        dataSports : dataSports
+      })
+    })
+    .catch(err => {
+      res.send(err)
     })
   })
   .catch(err => {
@@ -58,7 +72,8 @@ router.post('/edit/:id', (req, res) => {
     place       : req.body.place,
     date        : req.body.date,
     time        : req.body.time,
-    max_player  : req.body.max_player
+    max_player  : req.body.max_player,
+    SportListId : req.body.sportListId
   }
   Agenda.update(objEdit, { //update data agenda
     where: { id }
@@ -83,5 +98,7 @@ router.get('/delete/:id', (req, res) => {
     res.send(err)
   })
 })
+
+
 
 module.exports = router;
