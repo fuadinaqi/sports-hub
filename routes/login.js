@@ -3,7 +3,10 @@ const router      = express.Router()
 const session     = require('express-session')
 const Model       = require('../models');
 
+const Agenda      = Model.Agenda
 const Person      = Model.Person
+const PeopleAgendas = Model.PeopleAgendas
+const SportList   = Model.SportLists
 
 router.use(session({
     secret: 'key'
@@ -21,16 +24,15 @@ router.post('/', (req, res) => {
   Person.findOne({
     where : {email : objLogin.email}
   })
-  .then(() => {
-    // console.log(req.session);
-    req.session.isLogin = true
-    res.redirect('/')
+  .then((dataPerson) => {
+    req.session.isLoginUser = true
+    req.session.idPerson    = dataPerson.id
+    req.session.name        = dataPerson.name
+    res.redirect('/events')
   })
   .catch(err => {
     res.redirect('/login')
   })
 })
-
-//sign out nya blm
 
 module.exports = router
