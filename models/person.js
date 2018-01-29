@@ -7,6 +7,10 @@ module.exports = (sequelize, DataTypes) => {
     sport_interest: DataTypes.STRING,
     phone: DataTypes.STRING
   })
-  
+  // Person.associate = function (models) {
+  //   // ...associate the models
+  //   Person.belongsToMany(models.Agenda, {through: 'peopleagendas'});
+  //
+  // };
   return Person;
 };

@@ -2,7 +2,7 @@
 <html>
   <% include ./partials/head %>
   <body>
-    <h1>Add Agenda</h1>
+    <h1>Create Agenda</h1>
     <form action="/agendas/add" method="post">
       <label for="name">Name : </label>
       <input type="text" name="name" value="" placeholder=""><br>
@@ -14,6 +14,13 @@
       <input type="time" name="time" value="" placeholder=""><br>
       <label for="max_player">Max Player : </label>
       <input type="number" name="max_player" value="" placeholder=""><br>
+      <label for="SportList">Sport : </label>
+      <select name="sportListId">
+        <%rowSportList.forEach(sport => {%>
+          <option value="<%=sport.id%>"><%=sport.name%>
+          </option>
+        <%})%>
+      </select><br>
       <input type="submit" name="" value="submit">
     </form>
   </body>

@@ -3,7 +3,7 @@
   <% include ./partials/head %>
   <body>
     <h2>Agendas</h2>
-    <a href="/agendas/add">Add Agenda</a>
+    <a href="/agendas/add">Create Agenda</a>
     <br>
     <table>
       <tr>
@@ -14,6 +14,7 @@
         <th>DATE</th>
         <th>TIME</th>
         <th>MAX PLAYER</th>
+        <th>SPORT</th>
         <th>ACTION</th>
       </tr>
 
@@ -27,6 +28,11 @@
         <td><%= agenda.date %></td>
         <td><%= agenda.time %></td>
         <td><%= agenda.max_player %></td>
+        <% if(agenda.SportList) {%>
+        <td><%= agenda.SportList.name %></td>
+        <% } else { %>
+        <td></td>
+        <% } %>
         <td>
           <a href="/agendas/edit/<%= agenda.id  %>">Edit</a>
           <a href="/agendas/delete/<%= agenda.id %>" onclick="return confirm (`Are you sure to delete this data?`)">Delete</a>

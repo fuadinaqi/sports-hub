@@ -14,6 +14,17 @@
       <input type="time" name="time" value="<%= dataAgenda.time %>" placeholder=""><br>
       <label for="max_player">Max Player : </label>
       <input type="number" name="max_player" value="<%= dataAgenda.max_player %>" placeholder=""><br>
+      <label for="SportList">Sport : </label>
+      <select name="sportListId">
+        <%dataSports.forEach(sport => {%>
+          <% if(sport.id == dataAgenda.SportListId) { %>
+            <option value="<%= sport.id %>" selected><%= sport.name %></option>
+          <% } else { %>
+            <option value="<%=sport.id%>"><%=sport.name%>
+          </option>
+          <% } %>
+        <%})%>
+      </select><br>
       <input type="submit" name="" value="edit">
     </form>
   </body>
