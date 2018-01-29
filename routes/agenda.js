@@ -1,14 +1,14 @@
 const express     = require('express')
 const router      = express.Router()
 const Model       = require('../models')
+const PersonAgendas = Model.PersonAgendas
 const SportList   = Model.SportLists
 const Agenda      = Model.Agenda
+const Person      = Model.Person
 
 router.get('/', (req, res) => {
   Agenda.findAll({
-    include: [
-      { model: Model.SportLists}
-    ]
+    include: [Model.SportLists, Model.Person]
   }) // select all data agendas
   .then(rowAgendas => {
     // res.send(rowAgendas)

@@ -1,6 +1,7 @@
 function checkLogin(req, res, next) {
   // let isLogin = req.session.isLoginA
-  let isLogin = req.session.isLogin
+  // let isLogin = req.session.isLogin
+  let isLogin = true
   if (isLogin) {
     next()
   } else {

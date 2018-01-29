@@ -5,7 +5,7 @@
     <h2>Agendas</h2>
     <a href="/agendas/add">Create Agenda</a>
     <br>
-    <table>
+    <table  border="1">
       <tr>
         <th>NO</th>
         <th>ID</th>
@@ -13,8 +13,9 @@
         <th>PLACE</th>
         <th>DATE</th>
         <th>TIME</th>
-        <th>MAX PLAYER</th>
+        <th>PLAYER NEEDS</th>
         <th>SPORT</th>
+        <th>PLAYER LISTS</th>
         <th>ACTION</th>
       </tr>
 
@@ -33,6 +34,13 @@
         <% } else { %>
         <td></td>
         <% } %>
+        <td>
+          <ol>
+            <% agenda.People.forEach(person => { %>
+              <li><%= person.name %></li>
+            <% }) %>
+          </ol>
+        </td>
         <td>
           <a href="/agendas/edit/<%= agenda.id  %>">Edit</a>
           <a href="/agendas/delete/<%= agenda.id %>" onclick="return confirm (`Are you sure to delete this data?`)">Delete</a>
