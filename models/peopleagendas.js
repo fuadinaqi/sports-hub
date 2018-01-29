@@ -1,14 +1,12 @@
 'use strict';
 module.exports = (sequelize, DataTypes) => {
   var PeopleAgendas = sequelize.define('PeopleAgendas', {
-    PeopleId: DataTypes.INTEGER,
+    PersonId: DataTypes.INTEGER,
     AgendaId: DataTypes.INTEGER
-  }, {
-    classMethods: {
-      associate: function(models) {
-        // associations can be defined here
-      }
-    }
-  });
+  })
+  PeopleAgendas.associate = function (models) {
+    // PeopleAgendas.belongsTo(models.Person)
+    // PeopleAgendas.belongsTo(models.Agenda)
+  };
   return PeopleAgendas;
 };

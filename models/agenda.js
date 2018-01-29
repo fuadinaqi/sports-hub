@@ -9,10 +9,9 @@ module.exports = (sequelize, DataTypes) => {
     SportListId: DataTypes.INTEGER
   })
   Agenda.associate = function (models) {
-    // ...associate the models
     Agenda.belongsTo(models.SportLists)
-    // Agenda.belongsToMany(models.Person, {through: 'peopleagendas'});
-
+    Agenda.belongsToMany(models.Person, {through: 'PeopleAgendas'});
+    // Agenda.hasMany(models.PeopleAgendas)
   };
   return Agenda;
 };
