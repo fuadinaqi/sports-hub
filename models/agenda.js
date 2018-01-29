@@ -6,7 +6,7 @@ module.exports = (sequelize, DataTypes) => {
     date: DataTypes.STRING,
     time: DataTypes.STRING,
     max_player: DataTypes.INTEGER,
-    SportId: DataTypes.INTEGER
+    SportListId: DataTypes.INTEGER
   })
 
   return Agenda;
