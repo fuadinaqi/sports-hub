@@ -5,7 +5,7 @@ const favIcon         = require('express-favicon')
 const app             = express()
 const bodyParser      = require('body-parser')
 
-const People          = require('./routes/people');
+const Person          = require('./routes/person');
 const Agenda          = require('./routes/agenda');
 const SportList       = require('./routes/sport_list');
 
@@ -19,7 +19,7 @@ app.get('/', function (req, res) {
   res.render('home')
 })
 
-app.use('/peoples', People)
+app.use('/people', Person)
 app.use('/agendas', Agenda)
 app.use('/sport_lists', SportList)
 

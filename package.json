@@ -1,7 +1,7 @@
 {
   "name": "sports-hub",
   "version": "1.0.0",
-  "description": "",
+  "description": "pair-project",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -10,7 +10,7 @@
     "type": "git",
     "url": "git+https://github.com/fuadinaqi/sports-hub.git"
   },
-  "author": "",
+  "author": "fuad-dhiar",
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/fuadinaqi/sports-hub/issues"
