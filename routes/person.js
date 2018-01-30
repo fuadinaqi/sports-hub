@@ -20,7 +20,12 @@ router.get('/', (req, res) => {
 })
 
 router.get('/add', (req, res) => {
-    res.render('person_add')
+  Person.findAll().then(rowPeople => {
+    res.render('person_add', {rowPeople: rowPeople, err: false})
+  })
+    .catch(err => {
+      res.send(err)
+    })
 })
 
 router.post('/add', (req, res) => {
@@ -36,7 +41,9 @@ router.post('/add', (req, res) => {
     res.redirect('/people')
   })
   .catch(err => {
-    res.send(err)
+    Person.findAll().then(rowPeople => {
+      res.render('person_add', {rowPeople: rowPeople, err: err.message})
+    })
   })
 })
 
@@ -67,7 +74,9 @@ router.post('/edit/:id', (req,res) => {
     res.redirect('/people')
   })
   .catch(err => {
-    res.send(err)
+    Person.findAll().then(rowPeople => {
+      res.render('person_edit', {rowPeople: rowPeople, err: err.message})
+    })
   })
 })
 

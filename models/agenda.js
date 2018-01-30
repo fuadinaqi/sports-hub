@@ -14,12 +14,13 @@ module.exports = (sequelize, DataTypes) => {
       validate  : {
         isNull(value, next) {
           if(value.length == 0) {
-            next(`Agenda has to be filled`)
+            next(`Name column should be filled`)
           } else {
             next()
           }
         }
-      }
+      },
+      isAlpha : true
     },
     place: {
       type      : DataTypes.STRING,
@@ -31,7 +32,8 @@ module.exports = (sequelize, DataTypes) => {
             next()
           }
         }
-      }
+      },
+      isAlpha : true
     },
     date: {
       type      : DataTypes.STRING,
@@ -75,13 +77,8 @@ module.exports = (sequelize, DataTypes) => {
           }
         }
       },
-      itToMany(value, next) {
-        if(value >= 50) {
-          next(`Max Player is over limit`)
-        } else {
-          next()
-        }
-      }
+      max             : 50,
+      isAlphanumeric  : true
     },
     SportListId: DataTypes.INTEGER,
     hostId: DataTypes.INTEGER
