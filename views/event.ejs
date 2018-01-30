@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+  <% include ./partials/headUser %>
+  <body>
+    <h1>Events</h1>
+    <h4>Hallo <%= dataPerson.name %>, make your agenda or join here :)</h4>
+    <a href="/events/add">Create Your Agenda</a>
+    <br><br>
+    <table border="1">
+      <tr>
+        <th>NO</th>
+        <th>NAME</th>
+        <th>PLACE</th>
+        <th>DATE</th>
+        <th>TIME</th>
+        <th>PLAYER NEEDS</th>
+        <th>SPORT</th>
+        <th>ACTION</th>
+      </tr>
+
+      <% let countConjunction = 0 %>
+      <% let count = 1 %>
+      <% rowAgendas.forEach(agenda => { %>
+      <tr>
+        <td><%= count++ %></td>
+        <td><%= agenda.name %></td>
+        <td><%= agenda.place %></td>
+        <td><%= agenda.date %></td>
+        <td><%= agenda.time %></td>
+        <td><%= agenda.max_player %></td>
+        <% if(agenda.SportList) {%>
+        <td><%= agenda.SportList.name %></td>
+        <% } else { %>
+        <td></td>
+        <% } %>
+        <td>
+          <form action="/events/join" method="post">
+            <input type="hidden" name="AgendaId" value="<%= agenda.id %>">
+            <input type="hidden" name="PersonId" value="<%= dataPerson.idPerson %>">
+            <% if(rowPeopleAgendas.length > 0) {%>
+              <% rowPeopleAgendas.find(conjunction => { %>
+                  <% if(conjunction.AgendaId == agenda.id && conjunction.PersonId == dataPerson.idPerson) { %>
+                    <% countConjunction++ %>
+                  <% } %>
+                <% }) %>
+              <% } %>
+              <% if(countConjunction == 1) { %>
+                <p>Waiting</p>
+                <% countConjunction = 0 %>
+              <% } else if(countConjunction == 0 && agenda.max_player!=0) { %>
+                <input type="submit" name="" value="JOIN">
+              <% } else if(agenda.max_player == 0) {%>
+                <p>Full Booked</p>
+              <% } %>
+          </form>
+        </td>
+      </tr>
+      <% }) %>
+    </table>
+    <a href="/events/profile">Your Events</a>
+  </body>
+</html>

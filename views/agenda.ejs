@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html>
+  <% include ./partials/head %>
+  <body>
+    <h2>Agendas</h2>
+    <a href="/agendas/add">Create Agenda</a>
+    <br>
+    <table  border="1">
+      <tr>
+        <th>NO</th>
+        <th>ID</th>
+        <th>NAME</th>
+        <th>PLACE</th>
+        <th>DATE</th>
+        <th>TIME</th>
+        <th>PLAYER NEEDS</th>
+        <th>SPORT</th>
+        <th>HOSTED BY</th>
+        <th>PLAYER LISTS</th>
+        <th>FULL BOOKED</th>
+        <th>ACTION</th>
+      </tr>
+
+      <% let count = 1 %>
+      <% rowAgendas.forEach(agenda => { %>
+        <tr>
+          <td><%= count++ %></td>
+          <td><%= agenda.id %></td>
+          <td><%= agenda.name %></td>
+          <td><%= agenda.place %></td>
+          <td><%= agenda.date %></td>
+          <td><%= agenda.time %></td>
+          <td><%= agenda.max_player %></td>
+          <% if(agenda.SportList) {%>
+          <td><%= agenda.SportList.name %></td>
+          <% } else { %>
+          <td></td>
+          <% } %>
+          <% if(dataHost.length > 0) {%>
+            <% for(let i = 0; i < dataHost.length; i++) {%>
+              <% if(agenda.hostId == dataHost[i].id) {%>
+                <td><%= dataHost[i].name %></td>
+                <% i = dataHost.length %>
+              <%}%>
+            <%}%>
+          <%} else {%>
+            <td></td>
+          <%}%>
+          <td>
+            <ol>
+              <% agenda.People.forEach(person => { %>
+                <li><%= person.name %></li>
+              <% }) %>
+            </ol>
+          </td>
+          <% if(agenda.max_player > 0) { %>
+          <td>No</td>
+          <% } else { %>
+          <td>Yes</td>
+          <% } %>
+          <td>
+            <a href="/agendas/edit/<%= agenda.id  %>">Edit</a>
+            <a href="/agendas/delete/<%= agenda.id %>" onclick="return confirm (`Are you sure to delete this data?`)">Delete</a>
+          </td>
+        </tr>
+      <% }) %>
+    </table>
+  </body>
+</html>
