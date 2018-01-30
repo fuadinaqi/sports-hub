@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+  <% include ./partials/head %>
+  <body>
+    <h1>Add Person</h1>
+    <% include ./partials/error %>
+    <form action="/people/edit/<%=dataPerson.id%>" method="post">
+      <label for="name">Name : </label>
+      <input type="text" name="name" value="<%=dataPerson.name%>" placeholder="Name"><br>
+      <label for="location">Location : </label>
+      <input type="text" name="location" value="<%=dataPerson.location%>" placeholder="Location"><br>
+      <label for="email">Email : </label>
+      <input type="text" name="email" value="<%=dataPerson.email%>" placeholder="Email"><br>
+      <label for="sport_interest">Sport Interest : </label>
+      <input type="text" name="sport_interest" value="<%=dataPerson.sport_interest%>" placeholder="Sport Interest"><br>
+      <label for="phone">Phone : </label>
+      <input type="text" name="phone" value="<%=dataPerson.phone%>" placeholder="phone"><br>
+      <input type="submit" name="" value="submit">
+    </form>
+  </body>
+</html>
