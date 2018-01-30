@@ -54,7 +54,6 @@ router.post('/add', (req, res) => {
     max_player  : req.body.max_player,
     SportListId : req.body.sportListId
   }
-  console.log(new Date());
   Agenda.create(objCreate) //insert data agenda
   .then(() => {
     res.redirect('/agendas')
