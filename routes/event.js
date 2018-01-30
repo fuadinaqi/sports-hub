@@ -38,7 +38,67 @@ router.post('/join', (req, res) => {
 
   PeopleAgendas.create(objCreate)
   .then(() => {
+    //here send email
+    Agenda.findById(objCreate.AgendaId)
+    .then(dataAgenda => {
+      dataAgenda.max_player -= 1
+      Agenda.update({
+        max_player : dataAgenda.max_player
+      },{
+        where : {id : dataAgenda.id}
+      })
+      .then(() => {
+        res.redirect('/events')
+      })
+      .catch(err => {
+        res.send(err)
+      })
+    })
+  })
+  .catch(err => {
+    res.send(err)
+  })
+})
+
+router.get('/add', (req, res) => {
+  SportLists.findAll()
+  .then(rowSportList => {
+    res.render('event_add', {
+      rowSportList: rowSportList
+    })
+  })
+  .catch(err => {
+    res.send(err)
+  })
+})
+
+router.post('/add', (req, res) => {
+  let objCreate = {
+    name        : req.body.name,
+    place       : req.body.place,
+    date        : req.body.date,
+    time        : req.body.time,
+    max_player  : req.body.max_player,
+    SportListId : req.body.sportListId,
+    hostId      : req.session.idPerson
+  }
+  Agenda.create(objCreate) //insert data agenda
+  .then(() => {
     res.redirect('/events')
+  })
+  .catch(err => {
+    res.send(err)
+  })
+})
+
+router.get('/profile', (req, res) => {
+  Agenda.findAll({
+    where : {hostId : req.session.idPerson}
+  })
+  .then(rowAgendas => {
+    res.render('event_profil', {
+      rowAgendas : rowAgendas
+    })
   })
   .catch(err => {
     res.send(err)

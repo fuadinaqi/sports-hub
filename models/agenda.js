@@ -6,7 +6,8 @@ module.exports = (sequelize, DataTypes) => {
     date: DataTypes.STRING,
     time: DataTypes.STRING,
     max_player: DataTypes.INTEGER,
-    SportListId: DataTypes.INTEGER
+    SportListId: DataTypes.INTEGER,
+    hostId: DataTypes.INTEGER
   })
   Agenda.associate = function (models) {
     Agenda.belongsTo(models.SportLists)
