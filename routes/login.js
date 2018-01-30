@@ -25,10 +25,20 @@ router.post('/', (req, res) => {
     where : {email : objLogin.email}
   })
   .then((dataPerson) => {
-    req.session.isLoginUser = true
-    req.session.idPerson    = dataPerson.id
-    req.session.name        = dataPerson.name
-    res.redirect('/events')
+    if (objLogin.password == dataPerson.password) {
+      if (objLogin.email == 'adhiarta@gmail.com' || objLogin.email == 'fuadi@gmail.com') {
+        req.session.isLoginUser = true
+        req.session.isLogin     = true
+        req.session.idPerson    = dataPerson.id
+        req.session.name        = dataPerson.name
+        res.redirect('/')
+      } else {
+        req.session.isLoginUser = true
+        req.session.idPerson    = dataPerson.id
+        req.session.name        = dataPerson.name
+        res.redirect('/events')
+      }
+    }
   })
   .catch(err => {
     res.redirect('/login')

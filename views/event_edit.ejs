@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html>
-  <% include ./partials/head %>
+<% include ./partials/headUser %>
   <body>
-    <h1>Edit Agenda</h1>
+    <h1>Edit Event</h1>
     <form action="/agendas/edit/<%= dataAgenda.id %>" method="post">
       <label for="name">Name : </label>
       <input type="text" name="name" value="<%= dataAgenda.name %>" placeholder=""><br>

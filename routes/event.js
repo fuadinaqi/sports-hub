@@ -2,6 +2,10 @@ const express     = require('express')
 const router      = express.Router()
 const Model       = require('../models')
 const session     = require('express-session')
+const moment        = require('moment');
+const today         = moment().format('L');//get today's date
+let arrToday        = today.split('/') //arrange date format
+const thisDay       = arrToday.reverse().join('-')//arrange date format
 
 const Agenda      = Model.Agenda
 const Person      = Model.Person
@@ -93,12 +97,69 @@ router.post('/add', (req, res) => {
 
 router.get('/profile', (req, res) => {
   Agenda.findAll({
-    where : {hostId : req.session.idPerson}
+    include : [Model.SportLists, Model.Person],
+    where   : {hostId : req.session.idPerson}
   })
   .then(rowAgendas => {
     res.render('event_profil', {
       rowAgendas : rowAgendas
     })
+  })
+  .catch(err => {
+    res.send(err)
+  })
+})
+
+router.get('/profile/edit/:id', (req, res) => {
+  let id = req.params.id
+  Agenda.findById(id)
+  .then(dataAgenda => {
+    SportLists.findAll()
+    .then(dataSports => {
+      res.render('event_edit', {
+        dataAgenda : dataAgenda,
+        dataSports : dataSports,
+        today      : thisDay,
+        err        : false
+      })
+    })
+    .catch(err => {
+      res.send(err)
+    })
+  })
+  .catch(err => {
+    res.send(err)
+  })
+})
+
+router.post('/profile/edit/:id', (req, res) => {
+  let id = req.params.id
+  let objEdit = {
+    name        : req.body.name,
+    place       : req.body.place,
+    date        : req.body.date,
+    time        : req.body.time,
+    max_player  : req.body.max_player,
+    SportListId : req.body.sportListId
+  }
+  Agenda.update(objEdit, { //update data agenda
+    where: { id }
+  })
+  .then(() => {
+    res.redirect('/events')
+  })
+  .catch(err => {
+    res.send(err)
+  })
+})
+
+router.get('/profile/delete/:id', (req, res) => {
+  let id = req.params.id
+  Agenda.destroy({ //delete data agenda
+    where : { id }
+  })
+  .then(() => {
+    res.redirect('/events')
   })
   .catch(err => {
     res.send(err)

@@ -10,9 +10,9 @@ const Person          = require('./routes/person');
 const Agenda          = require('./routes/agenda');
 const SportList       = require('./routes/sport_list');
 const Login           = require('./routes/login');
-const SignUp           = require('./routes/signUp');
-const Events           = require('./routes/event')
-
+const SignUp          = require('./routes/signUp');
+const Events          = require('./routes/event')
+const Logout          = require('./routes/logout');
 
 app.use(bodyParser.urlencoded({ extended: false }))
 app.use(bodyParser.json())
@@ -29,6 +29,7 @@ app.get('/', authLogin.checkLogin, function (req, res) {
 
 app.use('/login', Login)
 app.use('/signUp', SignUp)
+app.use('/logout', authLogin.checkLoginUser, Logout)
 app.use('/people', authLogin.checkLogin, Person)
 app.use('/agendas', authLogin.checkLogin, Agenda)
 app.use('/sport_lists', authLogin.checkLogin, SportList)

@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html>
+  <% include ./partials/headUser %>
   <body>
     <h1>Events</h1>
     <h4>Hallo <%= dataPerson.name %>, make your agenda or join here :)</h4>
@@ -38,17 +39,19 @@
             <input type="hidden" name="PersonId" value="<%= dataPerson.idPerson %>">
             <% if(rowPeopleAgendas.length > 0) {%>
               <% rowPeopleAgendas.find(conjunction => { %>
-                <% if(conjunction.AgendaId == agenda.id && conjunction.PersonId == dataPerson.idPerson) { %>
-                  <% countConjunction++ %>
-                <% } %>
-              <% }) %>
+                  <% if(conjunction.AgendaId == agenda.id && conjunction.PersonId == dataPerson.idPerson) { %>
+                    <% countConjunction++ %>
+                  <% } %>
+                <% }) %>
+              <% } %>
               <% if(countConjunction == 1) { %>
                 <p>Waiting</p>
                 <% countConjunction = 0 %>
-              <% } else { %>
+              <% } else if(countConjunction == 0 && agenda.max_player!=0) { %>
                 <input type="submit" name="" value="JOIN">
+              <% } else if(agenda.max_player == 0) {%>
+                <p>Full Booked</p>
               <% } %>
-            <% } %>
           </form>
         </td>
       </tr>
