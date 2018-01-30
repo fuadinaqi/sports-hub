@@ -9,11 +9,11 @@
       <label for="place">Place : </label>
       <input type="text" name="place" value="<%= dataAgenda.place %>" placeholder=""><br>
       <label for="date">Date : </label>
-      <input type="date" name="date" value="<%= dataAgenda.date %>" placeholder=""><br>
+      <input type="date" name="date" min="<%= today %>" value="<%= dataAgenda.date %>" placeholder=""><br>
       <label for="time">Time : </label>
       <input type="time" name="time" value="<%= dataAgenda.time %>" placeholder=""><br>
       <label for="max_player">Player Needs : </label>
-      <input type="number" name="max_player" value="<%= dataAgenda.max_player %>" placeholder=""><br>
+      <input type="number" name="max_player" min="1" value="<%= dataAgenda.max_player %>" placeholder=""><br>
       <label for="SportList">Sport : </label>
       <select name="sportListId">
         <%dataSports.forEach(sport => {%>

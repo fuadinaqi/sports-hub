@@ -15,6 +15,7 @@
         <th>TIME</th>
         <th>PLAYER NEEDS</th>
         <th>SPORT</th>
+        <th>HOSTED BY</th>
         <th>PLAYER LISTS</th>
         <th>ACTION</th>
       </tr>
@@ -34,6 +35,17 @@
         <% } else { %>
         <td></td>
         <% } %>
+        <% if(dataHost) {%>
+          <% dataHost.forEach(host => {%>
+            <% if(agenda.hostId == host.id) {%>
+              <td><%= host.name %></td>
+            <%} else { %>
+              <td></td>
+            <% } %>
+          <%})%>
+        <%} else {%>
+          <td> </td>
+        <%}%>
         <td>
           <ol>
             <% agenda.People.forEach(person => { %>
