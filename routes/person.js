@@ -20,7 +20,12 @@ router.get('/', (req, res) => {
 })
 
 router.get('/add', (req, res) => {
-    res.render('person_add')
+  Person.findAll().then(rowPeople => {
+    res.render('person_add', {rowPeople: rowPeople, err: false})
+  })
+    .catch(err => {
+      res.send(err)
+    })
 })
 
 router.post('/add', (req, res) => {
@@ -29,14 +34,17 @@ router.post('/add', (req, res) => {
     location        : req.body.location,
     email           : req.body.email,
     sport_interest  : req.body.sport_interest,
-    phone           : req.body.phone
+    phone           : req.body.phone,
+    err             : false
   }
   Person.create(objNewPerson)
   .then(() => {
     res.redirect('/people')
   })
   .catch(err => {
-    res.send(err)
+    Person.findAll().then(rowPeople => {
+      res.render('person_add', {rowPeople: rowPeople, err: err.message})
+    })
   })
 })
 
@@ -58,7 +66,7 @@ router.post('/edit/:id', (req,res) => {
     location        : req.body.location,
     email           : req.body.email,
     sport_interest  : req.body.sport_interest,
-    phone           : req.body.phone
+    phone           : req.body.phone,
   }
   Person.update(objNewPerson, {
     where: {id}
@@ -67,7 +75,9 @@ router.post('/edit/:id', (req,res) => {
     res.redirect('/people')
   })
   .catch(err => {
-    res.send(err)
+    Person.findAll().then(rowPeople => {
+      res.render('person_edit', {rowPeople: rowPeople, err: err.message})
+    })
   })
 })
 

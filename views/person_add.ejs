@@ -3,6 +3,7 @@
   <% include ./partials/head %>
   <body>
     <h1>Add Person</h1>
+    <% include ./partials/error %>
     <form action="/people/add" method="post">
       <label for="name">Name : </label>
       <input type="text" name="name" value="" placeholder="Name"><br>
