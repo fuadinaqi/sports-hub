@@ -16,7 +16,7 @@ router.get('/', (req, res) => {
 })
 
 router.get('/add', (req, res) => {
-  res.render('sport_list_add')
+  res.render('sport_list_add', err: false)
 })
 
 router.post('/add', (req, res) => {
@@ -28,7 +28,9 @@ router.post('/add', (req, res) => {
     res.redirect('/sport_lists')
   })
   .catch(err => {
-    res.send(err)
+    SportLists.findAll().then(rowSportList => {
+      res.render('sport_list_add', {rowSportList: rowSportList, err: err.message})
+    })
   })
 })
 
@@ -37,7 +39,8 @@ router.get('/edit/:id', (req, res) => {
   SportLists.findById(id)
   .then(dataSportList => {
     res.render('sport_list_edit', {
-      dataSportList : dataSportList
+      dataSportList : dataSportList,
+      err           : false
     })
   })
   .catch(err => {
@@ -49,6 +52,7 @@ router.post('/edit/:id', (req, res) => {
   let id = req.params.id
   let objEdit = {
     name        : req.body.name,
+    err         : false;
   }
   SportLists.update(objEdit, { //update data sport
     where: { id }
@@ -57,7 +61,9 @@ router.post('/edit/:id', (req, res) => {
     res.redirect('/sport_lists')
   })
   .catch(err => {
-    res.send(err)
+    SportLists.findAll().then(rowSportList => {
+      res.render('sport_list_add', {rowSportList: rowSportList, err: err.message})
+    })
   })
 })
 

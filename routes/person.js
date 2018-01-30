@@ -34,7 +34,8 @@ router.post('/add', (req, res) => {
     location        : req.body.location,
     email           : req.body.email,
     sport_interest  : req.body.sport_interest,
-    phone           : req.body.phone
+    phone           : req.body.phone,
+    err             : false
   }
   Person.create(objNewPerson)
   .then(() => {
@@ -65,7 +66,7 @@ router.post('/edit/:id', (req,res) => {
     location        : req.body.location,
     email           : req.body.email,
     sport_interest  : req.body.sport_interest,
-    phone           : req.body.phone
+    phone           : req.body.phone,
   }
   Person.update(objNewPerson, {
     where: {id}
