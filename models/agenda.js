@@ -19,8 +19,7 @@ module.exports = (sequelize, DataTypes) => {
             next()
           }
         }
-      },
-      isAlpha : true
+      }
     },
     place: {
       type      : DataTypes.STRING,
@@ -32,8 +31,7 @@ module.exports = (sequelize, DataTypes) => {
             next()
           }
         }
-      },
-      isAlpha : true
+      }
     },
     date: {
       type      : DataTypes.STRING,
@@ -69,6 +67,10 @@ module.exports = (sequelize, DataTypes) => {
     max_player: {
       type      : DataTypes.INTEGER,
       validate  : {
+        isAlphanumeric  : {
+          msg: 'Player should be filled with number'
+        },
+        max : {args: [50], msg: 'Maximum player is 50'},
         isNull(value, next) {
           if(value.lengh == 0) {
             next(`Max Player column should be filled`)
@@ -76,9 +78,7 @@ module.exports = (sequelize, DataTypes) => {
             next()
           }
         }
-      },
-      max             : 50,
-      isAlphanumeric  : true
+      }
     },
     SportListId: DataTypes.INTEGER,
     hostId: DataTypes.INTEGER
