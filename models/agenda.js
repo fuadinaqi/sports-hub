@@ -87,6 +87,7 @@ module.exports = (sequelize, DataTypes) => {
     Agenda.belongsTo(models.SportLists)
     Agenda.belongsToMany(models.Person, {through: 'PeopleAgendas'});
     // Agenda.hasMany(models.PeopleAgendas)
+    // Agenda.hasMany(models.PeopleAgendas)
   };
   return Agenda;
 };
