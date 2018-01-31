@@ -2,6 +2,7 @@ const express     = require('express')
 const router      = express.Router()
 const session     = require('express-session')
 const Model       = require('../models');
+const bcrypt      = require('bcrypt');
 
 const Agenda      = Model.Agenda
 const Person      = Model.Person
@@ -25,20 +26,24 @@ router.post('/', (req, res) => {
     where : {email : objLogin.email}
   })
   .then((dataPerson) => {
-    if (objLogin.password == dataPerson.password) {
-      if (objLogin.email == 'adhiarta@gmail.com' || objLogin.email == 'fuadi@gmail.com') {
-        req.session.isLoginUser = true
-        req.session.isLogin     = true
-        req.session.idPerson    = dataPerson.id
-        req.session.name        = dataPerson.name
-        res.redirect('/')
+    bcrypt.compare(objLogin.password, dataPerson.password).then(function(result) {
+      if (result) {
+          if (objLogin.email == 'adhiarta@gmail.com' || objLogin.email == 'fuadi@gmail.com') {
+            req.session.isLoginUser = true
+            req.session.isLogin     = true
+            req.session.idPerson    = dataPerson.id
+            req.session.name        = dataPerson.name
+            res.redirect('/')
+          } else {
+            req.session.isLoginUser = true
+            req.session.idPerson    = dataPerson.id
+            req.session.name        = dataPerson.name
+            res.redirect('/events')
+          }
       } else {
-        req.session.isLoginUser = true
-        req.session.idPerson    = dataPerson.id
-        req.session.name        = dataPerson.name
-        res.redirect('/events')
+        res.redirect('/login')
       }
-    }
+    });
   })
   .catch(err => {
     res.redirect('/login')

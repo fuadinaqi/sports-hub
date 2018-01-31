@@ -1,4 +1,6 @@
 'use strict';
+var bcrypt = require('bcrypt');
+
 module.exports = (sequelize, DataTypes) => {
   var Person = sequelize.define('Person', {
     name: {
@@ -55,7 +57,7 @@ module.exports = (sequelize, DataTypes) => {
     },
     phone: {
       type      : DataTypes.STRING,
-      isAlpha   : {msg: `should be filled with letter`},
+      isAlphanumeric   : {msg: `should be filled with number`},
       validate  : {
         isNull(value, next) {
           if(value.length == 0) {
@@ -72,5 +74,17 @@ module.exports = (sequelize, DataTypes) => {
     Person.belongsToMany(models.Agenda, {through: 'PeopleAgendas'});
     // Person.hasMany(models.PeopleAgendas)
   };
+
+  Person.beforeCreate(dataPerson => {
+    const saltRounds = 10;
+    const myPlaintextPassword = dataPerson.password;
+    return bcrypt.hash(myPlaintextPassword, saltRounds).then(function(hash) {
+      // Store hash in your password DB.
+      dataPerson.password = hash
+    });
+  })
+
+
+
   return Person;
 };
