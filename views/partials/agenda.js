@@ -1,41 +1,19 @@
-const express       = require('express')
-const router        = express.Router()
-const Model         = require('../models')
+const express     = require('express')
+const router      = express.Router()
+const Model       = require('../models')
 const PersonAgendas = Model.PersonAgendas
-const SportList     = Model.SportLists
-const Agenda        = Model.Agenda
-const Person        = Model.Person
-const moment        = require('moment');
-const today         = moment().format('L');//get today's date
-let arrToday        = today.split('/') //arrange date format
-const thisDay       = arrToday.reverse().join('-')//arrange date format
+const SportList   = Model.SportLists
+const Agenda      = Model.Agenda
+const Person      = Model.Person
 
 router.get('/', (req, res) => {
   Agenda.findAll({
     include: [Model.SportLists, Model.Person]
   }) // select all data agendas
   .then(rowAgendas => {
-    let arr = []
-    let count = 0
-    let full = false
-    rowAgendas.forEach(agenda => {
-      if (agenda.max_player == 0) {
-        full = true
-      }
-      let obj = {}
-      Person.findById(agenda.hostId)
-      .then(dataPerson => {
-        if (dataPerson) {
-          obj.id = dataPerson.id
-          obj.name = dataPerson.name
-          arr.push(obj)
-        }
-        if (rowAgendas.length-1 <= count) {
-          // res.send(arr)
-          res.render('agenda', {dataHost: arr, rowAgendas: rowAgendas, full : full})
-        }
-        count++
-      })
+    // res.send(rowAgendas)
+    res.render('agenda', {
+      rowAgendas : rowAgendas
     })
   })
   .catch(err => {
@@ -45,7 +23,7 @@ router.get('/', (req, res) => {
 
 router.get('/add', (req, res) => {
   SportList.findAll().then(rowSportList => {
-    res.render('agenda_add', {rowSportList: rowSportList, today: thisDay, err: false})
+    res.render('agenda_add', {rowSportList: rowSportList})
   })
 })
 
@@ -63,10 +41,7 @@ router.post('/add', (req, res) => {
     res.redirect('/agendas')
   })
   .catch(err => {
-    // res.send(err.message)
-    SportList.findAll().then(rowSportList => {
-      res.render('agenda_add', {rowSportList: rowSportList, today: thisDay, err: err.message})
-    })
+    res.send(err)
   })
 })
 
@@ -78,9 +53,7 @@ router.get('/edit/:id', (req, res) => {
     .then(dataSports => {
       res.render('agenda_edit', {
         dataAgenda : dataAgenda,
-        dataSports : dataSports,
-        today      : thisDay,
-        err        : false
+        dataSports : dataSports
       })
     })
     .catch(err => {

@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+<% include ./partials/headUser %>
+  <body>
+    <% if(rowAgendas.length == 0) { %>
+      <h1>You Haven't Events Yet</h1>
+      <a href="/events/add">Create Your Events Here</a><br><br>
+      <a href="/events">Back</a>
+    <% } else { %>
+      <h1>Your Events</h1>
+      <table border="1">
+        <tr>
+          <th>NO</th>
+          <th>NAME</th>
+          <th>PLACE</th>
+          <th>DATE</th>
+          <th>TIME</th>
+          <th>PLAYER NEEDS</th>
+          <th>SPORT</th>
+          <th>PLAYER LISTS</th>
+          <th>ACTION</th>
+        </tr>
+
+        <% let count = 1 %>
+        <% rowAgendas.forEach(agenda => { %>
+        <tr>
+          <td><%= count++ %></td>
+          <td><%= agenda.name %></td>
+          <td><%= agenda.place %></td>
+          <td><%= agenda.date %></td>
+          <td><%= agenda.time %></td>
+          <td><%= agenda.max_player %></td>
+          <% if(agenda.SportList) {%>
+          <td><%= agenda.SportList.name %></td>
+          <% } else { %>
+            <td></td>
+            <% } %>
+          <td>
+            <ol>
+              <% agenda.People.forEach(person => { %>
+                <li><%= person.name %></li>
+              <% }) %>
+            </ol>
+          </td>
+          <td>
+            <a href="/events/profile/edit/<%= agenda.id %>">Edit</a>
+            <a href="/events/profile/delete/<%= agenda.id %>" onclick="return confirm (`Are you sure to delete this item?`)">Delete</a>
+          </td>
+        </tr>
+        <% }) %>
+      </table>
+    <% } %>
+  </body>
+</html>

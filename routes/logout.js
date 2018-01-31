@@ -5,7 +5,7 @@ const Model       = require('../models');
 router.use(session({
     secret: 'key'
 }))
-//
+
 router.get('/', (req, res) => {
   req.session.destroy(function (err) {
     if (!err) {
