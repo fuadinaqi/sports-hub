@@ -3,6 +3,7 @@
   <% include ./partials/head %>
   <body>
     <h1>Edit Agenda</h1>
+    <% include ./partials/error %>
     <form action="/agendas/edit/<%= dataAgenda.id %>" method="post">
       <label for="name">Name : </label>
       <input type="text" name="name" value="<%= dataAgenda.name %>" placeholder=""><br>

@@ -33,6 +33,7 @@ router.post('/add', (req, res) => {
     name            : req.body.name,
     location        : req.body.location,
     email           : req.body.email,
+    password        : req.body.password,
     sport_interest  : req.body.sport_interest,
     phone           : req.body.phone,
     err             : false
@@ -52,7 +53,7 @@ router.get('/edit/:id', (req, res) => {
   let id = req.params.id
   Person.findById(id)
   .then(dataPerson => {
-    res.render('person_edit', {dataPerson: dataPerson})
+    res.render('person_edit', {dataPerson: dataPerson, err : false})
   })
   .catch(err => {
     res.send(err)
@@ -65,6 +66,7 @@ router.post('/edit/:id', (req,res) => {
     name            : req.body.name,
     location        : req.body.location,
     email           : req.body.email,
+    password        : req.body.password,
     sport_interest  : req.body.sport_interest,
     phone           : req.body.phone,
   }
@@ -83,16 +85,22 @@ router.post('/edit/:id', (req,res) => {
 
 router.get('/delete/:id', (req, res) => {
   let id = req.params.id
-  Person.destroy({ //delete data person
-    where : {id}
+  Agendas.findOne({
+    where : {hostId : id}
   })
-  .then(() => {
-    res.redirect('/people')
-  })
-  .catch(err => {
-    res.send(err)
+  .then(dataAgenda => {
+    Agenda.destroy({
+      where : {id : dataAgenda.id}
+    })
+    .then(() => {
+      Person.destroy({
+        where : {id}
+      })
+      .then(() => {
+        res.redirect('/people')
+      })
+    })
   })
 })
-
 
 module.exports = router;
