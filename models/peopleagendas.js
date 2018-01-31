@@ -5,8 +5,8 @@ module.exports = (sequelize, DataTypes) => {
     AgendaId: DataTypes.INTEGER
   })
   PeopleAgendas.associate = function (models) {
-    PeopleAgendas.belongsTo(models.Person)
-    PeopleAgendas.belongsTo(models.Agenda)
+    // PeopleAgendas.belongsTo(models.Person)
+    // PeopleAgendas.belongsTo(models.Agenda)
   };
   return PeopleAgendas;
 };

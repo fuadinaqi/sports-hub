@@ -13,6 +13,9 @@ module.exports = (sequelize, DataTypes) => {
       type      : DataTypes.STRING,
       validate  : {
         isNull(value, next) {
+        //   if(value.length == 0) {
+        //     throw new Error (`Name should be filled`)
+        //   }
           if(value.length == 0) {
             next(`Name column should be filled`)
           } else {

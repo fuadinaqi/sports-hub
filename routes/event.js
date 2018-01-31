@@ -16,6 +16,7 @@ const PeopleAgendas = Model.PeopleAgendas
 const SportLists  = Model.SportLists
 
 router.get('/', (req, res) => {
+  console.log(req.session);
   Agenda.findAll({
     include : [SportLists]
   })
@@ -75,8 +76,8 @@ router.post('/join', (req, res) => {
                 };
 
                 mailgun.messages().send(data, function (error, body) {
-                  console.log('body ..',body);
-                  console.log('error ..',error);
+                  // console.log('body ..',body);
+                  // console.log('error ..',error);
                 });
               })
               Person.findOne({
@@ -91,8 +92,8 @@ router.post('/join', (req, res) => {
                 };
 
                 mailgun.messages().send(data, function (error, body) {
-                  console.log('body ..',body);
-                  console.log('error ..',error);
+                  // console.log('body ..',body);
+                  // console.log('error ..',error);
                 });
                 res.redirect('/events')
               })
@@ -106,7 +107,28 @@ router.post('/join', (req, res) => {
               res.send(`haii eror ${err}`)
             })
           } else {
-            res.redirect('/events')
+            Person.findOne({
+              include : [Agenda],
+              where   : {id : objCreate.PersonId}
+            })
+            .then(joinedPerson => {
+              // console.log(joinedPerson);
+              res.send(joinedPerson);
+              // var data = {
+              //   from: 'Sports Hub Fuadhi <postmaster@sandboxb33efd7116d9434ab04cbd7bc49c1833.mailgun.org>',
+              //   to: joinedPerson.email,
+              //   subject: 'Hello From Sports Hub',
+              //   text: `Congrats! You've already join `
+              // };
+              // mailgun.messages().send(data, function (error, body) {
+              //   // console.log('body ..',body);
+              //   // console.log('error ..',error);
+              // });
+              // res.redirect('/events')
+            })
+            .catch(err => {
+              res.send(err)
+            })
           }
         })
         .catch(err => {
@@ -152,6 +174,7 @@ router.post('/add', (req, res) => {
   }
   Agenda.create(objCreate) //insert data agenda
   .then(() => {
+    console.log('hai world');
     res.redirect('/events')
   })
   .catch(err => {
