@@ -73,6 +73,7 @@ module.exports = (sequelize, DataTypes) => {
   Person.associate = function (models) {
     Person.belongsToMany(models.Agenda, {through: 'PeopleAgendas'});
     // Person.hasMany(models.PeopleAgendas)
+    // Person.hasMany(models.PeopleAgendas)
   };
 
   Person.beforeCreate(dataPerson => {
