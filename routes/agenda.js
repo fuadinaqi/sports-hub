@@ -17,11 +17,7 @@ router.get('/', (req, res) => {
   .then(rowAgendas => {
     let arr = []
     let count = 0
-    let full = false
     rowAgendas.forEach(agenda => {
-      if (agenda.max_player == 0) {
-        full = true
-      }
       let obj = {}
       Person.findById(agenda.hostId)
       .then(dataPerson => {
@@ -31,8 +27,8 @@ router.get('/', (req, res) => {
           arr.push(obj)
         }
         if (rowAgendas.length-1 <= count) {
-          // res.send(arr)
-          res.render('agenda', {dataHost: arr, rowAgendas: rowAgendas, full : full})
+          // console.log(rowAgendas[4].hostId);
+          res.render('agenda', {dataHost: arr, rowAgendas: rowAgendas})
         }
         count++
       })

@@ -16,7 +16,7 @@ router.get('/', (req, res) => {
 })
 
 router.get('/add', (req, res) => {
-  res.render('sport_list_add', {err: false})
+  res.render('sport_list_add', err: false)
 })
 
 router.post('/add', (req, res) => {
@@ -51,7 +51,8 @@ router.get('/edit/:id', (req, res) => {
 router.post('/edit/:id', (req, res) => {
   let id = req.params.id
   let objEdit = {
-    name        : req.body.name
+    name        : req.body.name,
+    err         : false;
   }
   SportLists.update(objEdit, { //update data sport
     where: { id }
