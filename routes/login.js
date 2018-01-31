@@ -7,7 +7,7 @@ const Agenda      = Model.Agenda
 const Person      = Model.Person
 const PeopleAgendas = Model.PeopleAgendas
 const SportList   = Model.SportLists
-
+//
 router.use(session({
     secret: 'key'
 }))
