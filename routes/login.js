@@ -1,13 +1,13 @@
-const express     = require('express')
-const router      = express.Router()
-const session     = require('express-session')
-const Model       = require('../models');
-const bcrypt      = require('bcrypt');
+const express       = require('express')
+const router        = express.Router()
+const session       = require('express-session')
+const Model         = require('../models');
+const bcrypt        = require('bcrypt');
 
-const Agenda      = Model.Agenda
-const Person      = Model.Person
+const Agenda        = Model.Agenda
+const Person        = Model.Person
 const PeopleAgendas = Model.PeopleAgendas
-const SportList   = Model.SportLists
+const SportList     = Model.SportLists
 
 router.use(session({
     secret: 'key'

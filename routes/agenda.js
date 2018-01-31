@@ -15,28 +15,35 @@ router.get('/', (req, res) => {
     include: [Model.SportLists, Model.Person]
   }) // select all data agendas
   .then(rowAgendas => {
-    let arr = []
-    let count = 0
-    let full = false
-    rowAgendas.forEach(agenda => {
-      if (agenda.max_player == 0) {
-        full = true
-      }
-      let obj = {}
-      Person.findById(agenda.hostId)
-      .then(dataPerson => {
-        if (dataPerson) {
-          obj.id = dataPerson.id
-          obj.name = dataPerson.name
-          arr.push(obj)
+    if (rowAgendas.length > 0) {
+      let arr = []
+      let count = 0
+      let full = false
+      rowAgendas.forEach(agenda => {
+        if (agenda.max_player == 0) {
+          full = true
         }
-        if (rowAgendas.length-1 <= count) {
-          // res.send(arr)
-          res.render('agenda', {dataHost: arr, rowAgendas: rowAgendas, full : full})
-        }
-        count++
+        let obj = {}
+        Person.findById(agenda.hostId)
+        .then(dataPerson => {
+          if (dataPerson) {
+            obj.id = dataPerson.id
+            obj.name = dataPerson.name
+            arr.push(obj)
+          }
+          if (rowAgendas.length-1 <= count) {
+            // res.send(arr)
+            res.render('agenda', {dataHost: arr, rowAgendas: rowAgendas, full : full})
+          }
+          count++
+        })
+        .catch(err => {
+          res.send(err)
+        })
       })
-    })
+    } else {
+      res.render('agenda', {dataHost: [], rowAgendas: rowAgendas, full : false})
+    }
   })
   .catch(err => {
     res.send(err)
@@ -125,7 +132,5 @@ router.get('/delete/:id', (req, res) => {
     res.send(err)
   })
 })
-
-
 
 module.exports = router;

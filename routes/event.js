@@ -68,7 +68,9 @@ router.get('/add', (req, res) => {
   SportLists.findAll()
   .then(rowSportList => {
     res.render('event_add', {
-      rowSportList: rowSportList
+      rowSportList: rowSportList,
+      today       : thisDay,
+      err         : false
     })
   })
   .catch(err => {
@@ -91,7 +93,14 @@ router.post('/add', (req, res) => {
     res.redirect('/events')
   })
   .catch(err => {
-    res.send(err)
+    SportLists.findAll()
+    .then(rowSportList => {
+      res.render('event_add', {
+        rowSportList: rowSportList,
+        today       : thisDay,
+        err         : err.message
+      })
+    })
   })
 })
 
