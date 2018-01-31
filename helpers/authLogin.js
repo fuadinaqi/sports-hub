@@ -4,12 +4,11 @@ function checkLogin(req, res, next) {
   if (isLogin) {
     next()
   } else {
-    // if(req.session.isLogin == true) {
-    //   res.redirect('/patients/sakit')
-    // } else {
-    //   res.redirect('/login')
-    // }
-    res.redirect('/login')
+    if (req.session.isLoginUser) {
+      res.redirect('/events')
+    } else {
+      res.redirect('/login')
+    }
   }
 }
 
