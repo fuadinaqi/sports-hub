@@ -93,7 +93,8 @@ module.exports = (sequelize, DataTypes) => {
     let bookingId = `${this.date}${this.id}`
     return bookingId.split('-').join('/')
   }
-
-  Agenda.before
+  Agenda.beforeCreate((agenda, options) => {
+    agenda.place = agenda.place.toLowerCase()
+  });
   return Agenda;
 };
