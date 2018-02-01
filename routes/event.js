@@ -28,7 +28,8 @@ router.get('/', (req, res) => {
         rowAgendas : rowAgendas,
         rowPeopleAgendas  : rowPeopleAgendas,
         dataPerson : req.session,
-        recentTime : recentTime
+        recentTime : recentTime,
+        agendaPlaces: false
       })
     })
     .catch(err => {
@@ -42,10 +43,33 @@ router.get('/', (req, res) => {
 
 router.post('/search', (req, res) => {
   Agenda.findAll({
+    include: [SportLists],
     where: {place : req.body.search.toLowerCase()}
   })
-  .then(data => {
-    res.send(data)
+  .then(agendaPlaces => {
+    // res.send(agendaPlaces)
+    Agenda.findAll({
+      include : [SportLists]
+    })
+    .then(rowAgendas => {
+      PeopleAgendas.findAll()
+      .then(rowPeopleAgendas => {
+        let recentTime = moment().format('LT')
+        res.render('event', {
+          rowAgendas : rowAgendas,
+          rowPeopleAgendas  : rowPeopleAgendas,
+          dataPerson : req.session,
+          recentTime : recentTime,
+          agendaPlaces: agendaPlaces
+        })
+      })
+      .catch(err => {
+        res.send(err)
+      })
+    })
+    .catch(err => {
+      res.send(err)
+    })
   })
   .catch(err => {
     res.send(err)
