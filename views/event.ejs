@@ -7,9 +7,22 @@
     <a href="/events/add">Create Your Agenda</a>
     <br><br>
     <form action="/events/search" method="post">
-      <input type="text" name="search" placeholder="search by city" value="">
+      <label for="">Search by City</label><br>
+      <input type="text" name="search" placeholder="search by city" value=""><br>
+      <label for="">Search by Date</label><br>
+      <input type="date" name="date" value=""><br>
+      <label for="">Search by Sport Interest</label><br>
+      <select name="sportListId">
+        <%rowSportList.forEach(sport => {%>
+          <option value="<%=sport.id%>"><%=sport.name%>
+          </option>
+        <%})%>
+      </select><br>
       <input type="submit" value="search">
     </form><br>
+    <% if(notThere) { %>
+      <p>Mohon maaf data yang anda butuhkan tidak tersedia</p>
+    <% } %>
     <table border="1">
       <tr>
         <th>NO</th>

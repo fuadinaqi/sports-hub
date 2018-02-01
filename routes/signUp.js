@@ -35,9 +35,10 @@ router.post('/', (req, res) => {
   .catch(err => {
     SportLists.findAll()
     .then(rowSportList => {
+      // res.send(err.errors[0].message)
       res.render('signUp', {
         rowSportList : rowSportList,
-        err : err.message
+        err : err.errors[0].message
       })
     })
     .catch(err => {
