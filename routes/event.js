@@ -9,6 +9,7 @@ const thisDay     = arrToday.reverse().join('-')//arrange date format
 const api_key     = 'key-25fc0a73025b3329627740cc582f9021';
 const domain      = 'sandboxb33efd7116d9434ab04cbd7bc49c1833.mailgun.org';
 const mailgun     = require('mailgun-js')({apiKey: api_key, domain: domain});
+const sendEmail   = require('../helpers/send_email');
 
 const Agenda      = Model.Agenda
 const Person      = Model.Person
@@ -37,6 +38,18 @@ router.get('/', (req, res) => {
   })
 })
 
+router.post('/search', (req, res) => {
+  Agenda.findAll({
+    where: {place : req.body.search.toLowerCase()}
+  })
+  .then(data => {
+    res.send(data)
+  })
+  .catch(err => {
+    res.send(err)
+  })
+})
+
 router.post('/join', (req, res) => {
   let objCreate = {
     AgendaId : req.body.AgendaId,
@@ -59,42 +72,23 @@ router.post('/join', (req, res) => {
           where : { max_player : 0, id : objCreate.AgendaId }
         })
         .then((agenda) => {
-          if (agenda) {
-            // console.log('asdasdsadasdasd', agenda);
+          if (agenda !== null) {
             Agenda.findOne({
               include : [Person],
               where   : { id : agenda.id }
             })
-            .then(Agenda => {
-              Agenda.People.forEach(person => {
-                var data = {
-                  from: 'Sports Hub Fuadhi <postmaster@sandboxb33efd7116d9434ab04cbd7bc49c1833.mailgun.org>',
-                  to: person.email,
-                  subject: 'Hello From Sports Hub',
-                  text: `Congrats! Your Event ${Agenda.name} is fully booked`
-                };
-
-                mailgun.messages().send(data, function (error, body) {
-                  console.log('body ..',body);
-                  console.log('error ..',error);
-                });
+            .then(detailAgenda => {
+              detailAgenda.People.forEach(person => {
+                sendEmail.sendEmailToUser(person, detailAgenda)
+                //kirim email ke player saat game sudah full book
               })
               Person.findOne({
-                where : { id : Agenda.hostId }
+                where : { id : detailAgenda.hostId }
               })
               .then(dataHost => {
-                var data = {
-                  from: 'Sports Hub Fuadhi <postmaster@sandboxb33efd7116d9434ab04cbd7bc49c1833.mailgun.org>',
-                  to: dataHost.email,
-                  subject: 'Hello From Sports Hub',
-                  text: `Congrats! Your Event ${Agenda.name} is fully booked, please contact your participants`
-                };
-
-                mailgun.messages().send(data, function (error, body) {
-                  console.log('body ..',body);
-                  console.log('error ..',error);
-                });
+                sendEmail.sendEmailToHost(dataHost, detailAgenda)
                 res.redirect('/events')
+                //kirim email ke host saat game sudah fool book
               })
               .catch(err => {
                 res.send(err)
@@ -106,7 +100,14 @@ router.post('/join', (req, res) => {
               res.send(`haii eror ${err}`)
             })
           } else {
-            res.redirect('/events')
+            Person.findById(objCreate.PersonId)
+            .then(dataPerson => {
+              sendEmail.sendEmailWhenJoin(dataPerson, dataAgenda)
+              res.redirect('/events')
+            })
+            .catch(err => {
+              res.send(err)
+            })
           }
         })
         .catch(err => {

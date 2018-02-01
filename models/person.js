@@ -5,8 +5,8 @@ module.exports = (sequelize, DataTypes) => {
   var Person = sequelize.define('Person', {
     name: {
       type      : DataTypes.STRING,
-      isAlpha   : {msg: `should be filled with letter`},
       validate  : {
+        isAlpha   : {msg: `should be filled with letter`},
         isNull(value, next) {
           if(value.length == 0) {
             next(`Name should be filled`)
@@ -18,8 +18,8 @@ module.exports = (sequelize, DataTypes) => {
     },
     location: {
       type      : DataTypes.STRING,
-      isAlpha   : {msg: `should be filled with letter`},
       validate  : {
+        isAlpha   : {msg: `should be filled with letter`},
         isNull(value, next) {
           if(value.length == 0) {
             next(`Location should be filled`)
@@ -31,8 +31,8 @@ module.exports = (sequelize, DataTypes) => {
     },
     email: {
       type      : DataTypes.STRING,
-      isEmail   : {msg: `column should be email format`},
       validate  : {
+        isEmail   : {msg: `column should be email format`},
         isNull(value, next) {
           if(value.length == 0) {
             next(`email should be filled`)
@@ -57,8 +57,8 @@ module.exports = (sequelize, DataTypes) => {
     },
     phone: {
       type      : DataTypes.STRING,
-      isAlphanumeric   : {msg: `should be filled with number`},
       validate  : {
+        isAlphanumeric   : {msg: `should be filled with number`},
         isNull(value, next) {
           if(value.length == 0) {
             next(`Phone should be filled`)
