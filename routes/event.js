@@ -22,10 +22,12 @@ router.get('/', (req, res) => {
   .then(rowAgendas => {
     PeopleAgendas.findAll()
     .then(rowPeopleAgendas => {
+      let recentTime = moment().format('LT')
       res.render('event', {
         rowAgendas : rowAgendas,
         rowPeopleAgendas  : rowPeopleAgendas,
-        dataPerson : req.session
+        dataPerson : req.session,
+        recentTime : recentTime
       })
     })
     .catch(err => {
