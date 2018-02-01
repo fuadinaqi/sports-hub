@@ -9,8 +9,9 @@
       <tr>
         <th>NO</th>
         <th>ID</th>
+        <th>BOOKING ID</th>
         <th>NAME</th>
-        <th>PLACE</th>
+        <th>CITY</th>
         <th>DATE</th>
         <th>TIME</th>
         <th>PLAYER NEEDS</th>
@@ -26,6 +27,7 @@
         <tr>
           <td><%= count++ %></td>
           <td><%= agenda.id %></td>
+          <td><%= agenda.getBookingId() %></td>
           <td><%= agenda.name %></td>
           <td><%= agenda.place %></td>
           <td><%= agenda.date %></td>
