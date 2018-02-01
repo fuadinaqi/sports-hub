@@ -30,7 +30,7 @@
           <p>Waiting</p>
           <% countConjunction = 0 %>
         <% } else if(countConjunction == 0 && agenda.max_player!=0) { %>
-          <input type="submit" name="" value="JOIN">
+          <input class="button is-danger is-focused" type="submit" name="" value="JOIN">
         <% } else if(agenda.max_player == 0) {%>
           <p>Full Booked</p>
         <% } %>
@@ -66,7 +66,7 @@
               <p>Waiting</p>
               <% countConjunction = 0 %>
             <% } else if(countConjunction == 0 && agenda.max_player!=0) { %>
-              <input type="submit" name="" value="JOIN">
+              <input class="button is-danger is-focused" type="submit" name="" value="JOIN">
             <% } else if(agenda.max_player == 0) {%>
               <p>Full Booked</p>
             <% } %>

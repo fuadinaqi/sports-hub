@@ -91,22 +91,27 @@ router.post('/edit/:id', (req,res) => {
 
 router.get('/delete/:id', (req, res) => {
   let id = req.params.id
-  Agenda.findOne({
-    where : {hostId : id}
+  Person.destroy({
+    where : {id}
   })
-  .then(dataAgenda => {
-    Agenda.destroy({
-      where : {id : dataAgenda.id}
+  .then(() => {
+    Agenda.findOne({
+      where : {hostId : id}
     })
-    .then(() => {
-      Person.destroy({
-        where : {id}
-      })
-      .then(() => {
+    .then(dataAgenda => {
+      if (dataAgenda != null) {
+        Agenda.destroy({
+          where : {id : dataAgenda.id}
+        })
+        .then(() => {
+          res.redirect('/people')
+        })
+      } else {
         res.redirect('/people')
-      })
+      }
     })
   })
+
 })
 
 module.exports = router;

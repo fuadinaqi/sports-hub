@@ -14,7 +14,9 @@ router.use(session({
 }))
 
 router.get('/', (req, res) => {
-  res.render('login')
+  res.render('login', {
+    err : false
+  })
 })
 
 router.post('/', (req, res) => {
@@ -26,24 +28,32 @@ router.post('/', (req, res) => {
     where : {email : objLogin.email}
   })
   .then((dataPerson) => {
-    bcrypt.compare(objLogin.password, dataPerson.password).then(function(result) {
-      if (result) {
-          if (objLogin.email == 'adhiarta@gmail.com' || objLogin.email == 'fuadi@gmail.com') {
-            req.session.isLoginUser = true
-            req.session.isLogin     = true
-            req.session.idPerson    = dataPerson.id
-            req.session.name        = dataPerson.name
-            res.redirect('/')
-          } else {
-            req.session.isLoginUser = true
-            req.session.idPerson    = dataPerson.id
-            req.session.name        = dataPerson.name
-            res.redirect('/events')
-          }
-      } else {
-        res.redirect('/login')
-      }
-    });
+    if (dataPerson !== null) {
+      bcrypt.compare(objLogin.password, dataPerson.password).then(function(result) {
+        if (result) {
+            if (objLogin.email == 'adhiarta@gmail.com' || objLogin.email == 'fuadi@gmail.com') {
+              req.session.isLoginUser = true
+              req.session.isLogin     = true
+              req.session.idPerson    = dataPerson.id
+              req.session.name        = dataPerson.name
+              res.redirect('/')
+            } else {
+              req.session.isLoginUser = true
+              req.session.idPerson    = dataPerson.id
+              req.session.name        = dataPerson.name
+              res.redirect('/events')
+            }
+        } else {
+          res.render('login', {
+            err : 'You entered wrong password!'
+          })
+        }
+      });
+    } else {
+      res.render('login', {
+        err : 'You entered wrong email!'
+      })
+    }
   })
   .catch(err => {
     res.redirect('/login')

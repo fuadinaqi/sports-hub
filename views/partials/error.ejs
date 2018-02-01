@@ -1,5 +1,8 @@
 <% if (err) {%>
-  <div class="alert alert-danger" role="alert">
-    <%= err %>
+  <div class="row">
+    <div class="notification is-danger">
+      <button class="delete"></button>
+      <%= err %>
+    </div>
   </div>
 <%}%>

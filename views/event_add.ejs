@@ -2,7 +2,8 @@
 <html>
 <% include ./partials/headUser %>
   <body>
-    <h1>Create Event</h1>
+    <% include ./partials/container %>
+    <h1 class="title is-1 light-blue white-text text-darken-2">Create Event</h1>
     <% include ./partials/error %>
     <form action="/events/add" method="post">
       <label for="name">Name : </label>
@@ -22,7 +23,8 @@
           </option>
         <%})%>
       </select><br>
-      <input type="submit" name="" value="submit">
+      <input class="button is-primary" type="submit" name="" value="submit">
     </form>
+  </div>
   </body>
 </html>

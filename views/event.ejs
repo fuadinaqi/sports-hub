@@ -2,10 +2,11 @@
 <html>
   <% include ./partials/headUser %>
   <body>
-    <h1>Events</h1>
-    <h4>Hallo <%= dataPerson.name %>, make your agenda or join here :)</h4>
-    <a href="/events/add">Create Your Agenda</a>
-    <br><br>
+    <% include ./partials/container %>
+    <h1 class="title is-1 light-blue white-text text-darken-2">Events</h1>
+    <h4 class="title is-3 light-green white-text text-darken-2">Hallo <%= dataPerson.name %>, make your agenda or join here :)</h4>
+    <a class="button is-primary" href="/events/add">Create Your Agenda</a>
+    <br><br><br><br><br>
     <form action="/events/search" method="post">
       <label for="">Search by City</label><br>
       <input type="text" name="search" placeholder="search by city" value=""><br>
@@ -18,12 +19,12 @@
           </option>
         <%})%>
       </select><br>
-      <input type="submit" value="search">
+      <input class="button is-primary" type="submit" value="search">
     </form><br>
     <% if(notThere) { %>
       <p>Mohon maaf data yang anda butuhkan tidak tersedia</p>
     <% } %>
-    <table border="1">
+    <table class="striped">
       <tr>
         <th>NO</th>
         <th>BOOKING ID</th>
@@ -41,6 +42,7 @@
       <% include ./partials/eventBySearch %>
       <% } %>
     </table>
-    <a href="/events/profile">Your Events</a>
+    <a class="button is-primary is-rounded"href="/events/profile">Your Events</a>
+  </div>
   </body>
 </html>

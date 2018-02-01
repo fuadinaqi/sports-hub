@@ -2,22 +2,50 @@
 <html>
   <% include ./partials/head %>
   <body>
-    <h1>Add Person</h1>
+    <% include ./partials/container %>
+    <h1 class="title is-1 light-blue white-text text-darken-2">Add Person</h1>
     <% include ./partials/error %>
-    <form action="/people/add" method="post">
-      <label for="name">Name : </label>
-      <input type="text" name="name" value="" placeholder="Name"><br>
-      <label for="location">City : </label>
-      <input type="text" name="location" value="" placeholder="Location"><br>
-      <label for="email">Email : </label>
-      <input type="text" name="email" value="" placeholder="Email"><br>
-      <label for="email">Password : </label>
-      <input type="password" name="password" value="" placeholder="Password"><br>
-      <label for="sport_interest">Sport Interest : </label>
-      <input type="text" name="sport_interest" value="" placeholder="Sport Interest"><br>
-      <label for="phone">Phone : </label>
-      <input type="text" name="phone" value="" placeholder="phone"><br>
-      <input type="submit" name="" value="submit">
+    <form class="col s12" action="/people/add" method="post">
+      <div class="row">
+        <div class="input-field col s6">
+          <input name="name" id="last_name" type="text" class="validate">
+          <label for="last_name">Name</label>
+        </div>
+      </div>
+      <div class="row">
+        <div class="input-field col s6">
+          <input name="location" id="last_name" type="text" class="validate">
+          <label for="last_name">City</label>
+        </div>
+      </div>
+      <div class="row">
+        <div class="input-field col s6">
+          <input name="email" id="last_name" type="email" class="validate">
+          <label for="last_name">Email</label>
+        </div>
+      </div>
+      <div class="row">
+        <div class="input-field col s6">
+          <input name="password" id="last_name" type="password" class="validate">
+          <label for="last_name">Password</label>
+        </div>
+      </div>
+      <div class="row">
+        <div class="input-field col s6">
+          <input name="sport_interest" id="last_name" type="text" class="validate">
+          <label for="last_name">Sport Interest</label>
+        </div>
+      </div>
+      <div class="row">
+        <div class="input-field col s6">
+          <input name="phone" id="last_name" type="text" class="validate">
+          <label for="last_name">Phone</label>
+        </div>
+      </div>
+      <div class="row">
+        <input class="button is-primary" type="submit" name="" value="submit">
+      </div>
     </form>
+  </div>
   </body>
 </html>
