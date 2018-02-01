@@ -2,6 +2,7 @@
 <html>
   <body>
     <h1>Register</h1>
+    <% include ./partials/error %>
     <form action="/signUp" method="post">
       <label for="email">Email : </label>
       <input type="email" name="email" value="" placeholder="Email"><br>
@@ -12,7 +13,12 @@
       <label for="location">City : </label>
       <input type="text" name="location" value="" placeholder="Location"><br>
       <label for="sport_interest">Sport Interest : </label>
-      <input type="text" name="sport_interest" value="" placeholder="Sport Interest"><br>
+      <select name="sportName">
+        <%rowSportList.forEach(sport => {%>
+          <option value="<%=sport.name%>"><%=sport.name%>
+          </option>
+        <%})%>
+      </select><br>
       <label for="phone">Phone : </label>
       <input type="text" name="phone" value="" placeholder="phone"><br>
       <input type="submit" name="" value="register">

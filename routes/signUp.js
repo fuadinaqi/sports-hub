@@ -3,9 +3,19 @@ const router      = express.Router()
 const Model       = require('../models');
 
 const Person      = Model.Person
+const SportLists  = Model.SportLists
 
 router.get('/', (req, res) => {
-  res.render('signUp')
+  SportLists.findAll()
+  .then(rowSportList => {
+    res.render('signUp', {
+      rowSportList : rowSportList,
+      err : false
+    })
+  })
+  .catch(err => {
+    res.send(err)
+  })
 })
 
 router.post('/', (req, res) => {
@@ -15,7 +25,7 @@ router.post('/', (req, res) => {
       name            : req.body.name,
       location        : req.body.location,
       email           : req.body.email,
-      sport_interest  : req.body.sport_interest,
+      sport_interest  : req.body.sportName,
       phone           : req.body.phone
     }
   Person.create(objSignUp)
@@ -23,7 +33,16 @@ router.post('/', (req, res) => {
     res.redirect('/login')
   })
   .catch(err => {
-    res.send(err)
+    SportLists.findAll()
+    .then(rowSportList => {
+      res.render('signUp', {
+        rowSportList : rowSportList,
+        err : err.message
+      })
+    })
+    .catch(err => {
+      res.send(err)
+    })
   })
 })
 

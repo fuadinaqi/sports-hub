@@ -247,7 +247,25 @@ router.post('/profile/edit/:id', (req, res) => {
     res.redirect('/events')
   })
   .catch(err => {
-    res.send(err)
+    let id = req.params.id
+    Agenda.findById(id)
+    .then(dataAgenda => {
+      SportLists.findAll()
+      .then(dataSports => {
+        res.render('event_edit', {
+          dataAgenda : dataAgenda,
+          dataSports : dataSports,
+          today      : thisDay,
+          err        : err.message
+        })
+      })
+      .catch(err => {
+        res.send(err)
+      })
+    })
+    .catch(err => {
+      res.send(err)
+    })
   })
 })
 

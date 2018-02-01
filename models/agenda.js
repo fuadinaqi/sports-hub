@@ -19,8 +19,7 @@ module.exports = (sequelize, DataTypes) => {
             next()
           }
         }
-      },
-      isAlpha : true
+      }
     },
     place: {
       type      : DataTypes.STRING,
@@ -32,8 +31,7 @@ module.exports = (sequelize, DataTypes) => {
             next()
           }
         }
-      },
-      isAlpha : true
+      }
     },
     date: {
       type      : DataTypes.STRING,
@@ -75,10 +73,9 @@ module.exports = (sequelize, DataTypes) => {
           } else {
             next()
           }
-        }
-      },
-      max             : 50,
-      isAlphanumeric  : true
+        },
+        max     : {args : 50, msg: `Maximal player needs is 50!`}
+      }
     },
     SportListId: DataTypes.INTEGER,
     hostId: DataTypes.INTEGER
