@@ -2,6 +2,7 @@
 <html>
   <% include ./partials/head %>
   <body>
+    <% include ./partials/container %>
     <h1>Edit Agenda</h1>
     <% include ./partials/error %>
     <form action="/agendas/edit/<%= dataAgenda.id %>" method="post">
@@ -28,5 +29,6 @@
       </select><br>
       <input type="submit" name="" value="edit">
     </form>
+  </div>
   </body>
 </html>

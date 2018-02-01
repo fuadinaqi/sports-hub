@@ -72,7 +72,7 @@ router.post('/add', (req, res) => {
   .catch(err => {
     // res.send(err.message)
     SportList.findAll().then(rowSportList => {
-      res.render('agenda_add', {rowSportList: rowSportList, today: thisDay, err: err.message})
+      res.render('agenda_add', {rowSportList: rowSportList, today: thisDay, err: err.errors[0].message})
     })
   })
 })
@@ -125,7 +125,7 @@ router.post('/edit/:id', (req, res) => {
           dataAgenda : dataAgenda,
           dataSports : dataSports,
           today      : thisDay,
-          err        : err.message
+          err        : err.errors[0].message
         })
       })
       .catch(err => {

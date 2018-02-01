@@ -2,10 +2,11 @@
 <html>
   <% include ./partials/head %>
   <body>
-    <h2>Agendas</h2>
-    <a href="/agendas/add">Create Agenda</a>
+    <% include ./partials/container %>
+    <h2 class="title is-1 light-blue white-text text-darken-2">Agendas</h2>
+    <a class="button is-link" href="/agendas/add">Create Agenda</a>
     <br>
-    <table  border="1">
+    <table class="striped">
       <tr>
         <th>NO</th>
         <th>ID</th>
@@ -61,11 +62,12 @@
           <td>Yes</td>
           <% } %>
           <td>
-            <a href="/agendas/edit/<%= agenda.id  %>">Edit</a>
-            <a href="/agendas/delete/<%= agenda.id %>" onclick="return confirm (`Are you sure to delete this data?`)">Delete</a>
+            <a class="button is-link" href="/agendas/edit/<%= agenda.id  %>">Edit</a><br><br>
+            <a class="button is-danger" href="/agendas/delete/<%= agenda.id %>" onclick="return confirm (`Are you sure to delete this data?`)">Delete</a>
           </td>
         </tr>
       <% }) %>
     </table>
+  </div>
   </body>
 </html>

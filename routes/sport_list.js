@@ -29,7 +29,7 @@ router.post('/add', (req, res) => {
   })
   .catch(err => {
     SportLists.findAll().then(rowSportList => {
-      res.render('sport_list_add', {rowSportList: rowSportList, err: err.message})
+      res.render('sport_list_add', {rowSportList: rowSportList, err: err.errors[0].message})
     })
   })
 })
@@ -61,7 +61,7 @@ router.post('/edit/:id', (req, res) => {
   })
   .catch(err => {
     SportLists.findAll().then(rowSportList => {
-      res.render('sport_list_add', {rowSportList: rowSportList, err: err.message})
+      res.render('sport_list_add', {rowSportList: rowSportList, err: err.errors[0].message})
     })
   })
 })

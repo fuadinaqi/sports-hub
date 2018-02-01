@@ -23,13 +23,21 @@ router.get('/', (req, res) => {
   .then(rowAgendas => {
     PeopleAgendas.findAll()
     .then(rowPeopleAgendas => {
-      let recentTime = moment().format('LT')
-      res.render('event', {
-        rowAgendas : rowAgendas,
-        rowPeopleAgendas  : rowPeopleAgendas,
-        dataPerson : req.session,
-        recentTime : recentTime,
-        agendaPlaces: false
+      SportLists.findAll()
+      .then(rowSportList => {
+        let recentTime = moment().format('LT')
+        res.render('event', {
+          rowAgendas : rowAgendas,
+          rowPeopleAgendas  : rowPeopleAgendas,
+          dataPerson : req.session,
+          recentTime : recentTime,
+          agendaPlaces: false,
+          rowSportList: rowSportList,
+          notThere: false
+        })
+      })
+      .catch(err => {
+        res.send(err)
       })
     })
     .catch(err => {
@@ -42,34 +50,87 @@ router.get('/', (req, res) => {
 })
 
 router.post('/search', (req, res) => {
+  let obj = {
+    SportListId : req.body.sportListId,
+    place       : req.body.search.toLowerCase(),
+    date        : req.body.date
+  }
+  let arr = []
+  let objSearch = {}
+  for (let i in obj) {
+    if (obj[i]) {
+      objSearch[i] = obj[i]
+    }
+  }
+  // res.send(objSearch)
   Agenda.findAll({
     include: [SportLists],
-    where: {place : req.body.search.toLowerCase()}
+    where: objSearch
   })
   .then(agendaPlaces => {
-    // res.send(agendaPlaces)
-    Agenda.findAll({
-      include : [SportLists]
-    })
-    .then(rowAgendas => {
-      PeopleAgendas.findAll()
-      .then(rowPeopleAgendas => {
-        let recentTime = moment().format('LT')
-        res.render('event', {
-          rowAgendas : rowAgendas,
-          rowPeopleAgendas  : rowPeopleAgendas,
-          dataPerson : req.session,
-          recentTime : recentTime,
-          agendaPlaces: agendaPlaces
+    if (agendaPlaces.length > 0) {
+      Agenda.findAll({
+        include : [SportLists]
+      })
+      .then(rowAgendas => {
+        PeopleAgendas.findAll()
+        .then(rowPeopleAgendas => {
+          SportLists.findAll()
+          .then(rowSportList => {
+            let recentTime = moment().format('LT')
+            res.render('event', {
+              rowAgendas : rowAgendas,
+              rowPeopleAgendas  : rowPeopleAgendas,
+              dataPerson : req.session,
+              recentTime : recentTime,
+              agendaPlaces: agendaPlaces,
+              rowSportList: rowSportList,
+              notThere: false
+            })
+          })
+          .catch(err => {
+            res.send(err)
+          })
+        })
+        .catch(err => {
+          res.send(err)
         })
       })
       .catch(err => {
         res.send(err)
       })
-    })
-    .catch(err => {
-      res.send(err)
-    })
+    } else {
+      Agenda.findAll({
+        include : [SportLists]
+      })
+      .then(rowAgendas => {
+        PeopleAgendas.findAll()
+        .then(rowPeopleAgendas => {
+          SportLists.findAll()
+          .then(rowSportList => {
+            let recentTime = moment().format('LT')
+            res.render('event', {
+              rowAgendas : rowAgendas,
+              rowPeopleAgendas  : rowPeopleAgendas,
+              dataPerson : req.session,
+              recentTime : recentTime,
+              agendaPlaces: agendaPlaces,
+              rowSportList: rowSportList,
+              notThere: true
+            })
+          })
+          .catch(err => {
+            res.send(err)
+          })
+        })
+        .catch(err => {
+          res.send(err)
+        })
+      })
+      .catch(err => {
+        res.send(err)
+      })
+    }
   })
   .catch(err => {
     res.send(err)
@@ -187,7 +248,7 @@ router.post('/add', (req, res) => {
       res.render('event_add', {
         rowSportList: rowSportList,
         today       : thisDay,
-        err         : err.message
+        err         : err.errors[0].message
       })
     })
   })
@@ -199,9 +260,18 @@ router.get('/profile', (req, res) => {
     where   : {hostId : req.session.idPerson}
   })
   .then(rowAgendas => {
-    res.render('event_profil', {
-      rowAgendas : rowAgendas
+    Person.findOne({
+      include : [Agenda],
+      where : {id : req.session.idPerson}
     })
+    .then(personAgenda => {
+      // res.send(personAgenda)
+      res.render('event_profil', {
+        rowAgendas : rowAgendas,
+        personAgenda: personAgenda
+      })
+    })
+
   })
   .catch(err => {
     res.send(err)
@@ -256,7 +326,7 @@ router.post('/profile/edit/:id', (req, res) => {
           dataAgenda : dataAgenda,
           dataSports : dataSports,
           today      : thisDay,
-          err        : err.message
+          err        : err.errors[0].message
         })
       })
       .catch(err => {

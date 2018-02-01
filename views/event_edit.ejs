@@ -2,7 +2,8 @@
 <html>
 <% include ./partials/headUser %>
   <body>
-    <h1>Edit Event</h1>
+    <% include ./partials/container %>
+    <h1 class="title is-1 light-blue white-text text-darken-2">Edit Event</h1>
     <% include ./partials/error %>
     <form action="/agendas/edit/<%= dataAgenda.id %>" method="post">
       <label for="name">Name : </label>
@@ -28,5 +29,6 @@
       </select><br>
       <input type="submit" name="" value="edit">
     </form>
+  </div>
   </body>
 </html>

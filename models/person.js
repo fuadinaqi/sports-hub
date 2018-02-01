@@ -30,10 +30,10 @@ module.exports = (sequelize, DataTypes) => {
     email: {
       type      : DataTypes.STRING,
       validate  : {
-        isEmail   : {msg: `column should be email format`},
+        isEmail   : {msg: `Column should be email format`},
         isNull(value, next) {
           if(value.length == 0) {
-            next(`email should be filled`)
+            next(`Email should be filled`)
           } else {
             next()
           }
@@ -61,7 +61,7 @@ module.exports = (sequelize, DataTypes) => {
       validate  : {
         isNull(value, next) {
           if(value.length == 0) {
-            next(`sport interest should be filled`)
+            next(`Sport interest should be filled`)
           } else {
             next()
           }
@@ -81,7 +81,12 @@ module.exports = (sequelize, DataTypes) => {
         }
       }
     },
-    password: DataTypes.STRING
+    password: {
+      type : DataTypes.STRING,
+      validate : {
+        len: {args : [8,25], msg: "Password should be at minimum 8 character and maximum 25 character"}
+      }
+    }
   })
   Person.associate = function (models) {
     Person.belongsToMany(models.Agenda, {through: 'PeopleAgendas'});

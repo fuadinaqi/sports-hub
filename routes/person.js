@@ -44,7 +44,7 @@ router.post('/add', (req, res) => {
   })
   .catch(err => {
     Person.findAll().then(rowPeople => {
-      res.render('person_add', {rowPeople: rowPeople, err: err.message})
+      res.render('person_add', {rowPeople: rowPeople, err: err.errors[0].message})
     })
   })
 })
@@ -63,6 +63,7 @@ router.get('/edit/:id', (req, res) => {
 router.post('/edit/:id', (req,res) => {
   let id = req.params.id
   let objNewPerson = {
+    id              : req.params.id,
     name            : req.body.name,
     location        : req.body.location,
     email           : req.body.email,
@@ -77,30 +78,40 @@ router.post('/edit/:id', (req,res) => {
     res.redirect('/people')
   })
   .catch(err => {
-    Person.findAll().then(rowPeople => {
-      res.render('person_edit', {rowPeople: rowPeople, err: err.message})
+    let id = req.params.id
+    Person.findById(id)
+    .then(dataPerson => {
+      res.render('person_edit', {dataPerson: dataPerson, err : err.errors[0].message})
+    })
+    .catch(err => {
+      res.send(err)
     })
   })
 })
 
 router.get('/delete/:id', (req, res) => {
   let id = req.params.id
-  Agendas.findOne({
-    where : {hostId : id}
+  Person.destroy({
+    where : {id}
   })
-  .then(dataAgenda => {
-    Agenda.destroy({
-      where : {id : dataAgenda.id}
+  .then(() => {
+    Agenda.findOne({
+      where : {hostId : id}
     })
-    .then(() => {
-      Person.destroy({
-        where : {id}
-      })
-      .then(() => {
+    .then(dataAgenda => {
+      if (dataAgenda != null) {
+        Agenda.destroy({
+          where : {id : dataAgenda.id}
+        })
+        .then(() => {
+          res.redirect('/people')
+        })
+      } else {
         res.redirect('/people')
-      })
+      }
     })
   })
+
 })
 
 module.exports = router;

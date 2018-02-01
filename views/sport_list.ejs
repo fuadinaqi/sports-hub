@@ -2,10 +2,11 @@
 <html>
   <% include ./partials/head %>
   <body>
-    <h1>Sport's List</h1>
-    <a href="/sport_lists/add">Add Sport</a>
+    <% include ./partials/container %>
+    <h1 class="title is-1 light-blue white-text text-darken-2">Sport's List</h1>
+    <a class="button is-primary" href="/sport_lists/add">Add Sport</a>
     <br>
-    <table>
+    <table class="striped">
       <tr>
         <th>NO</th>
         <th>ID</th>
@@ -20,11 +21,12 @@
         <td><%= sport.id %></td>
         <td><%= sport.name %></td>
         <td>
-          <a href="/sport_lists/edit/<%= sport.id %>">Edit</a>
-          <a href="/sport_lists/delete/<%= sport.id %>" onclick="return confirm (`Are you sure to delete this item?`)">Delete</a>
+          <a class="button is-link" href="/sport_lists/edit/<%= sport.id %>">Edit</a><br><br>
+          <a class="button is-danger" href="/sport_lists/delete/<%= sport.id %>" onclick="return confirm (`Are you sure to delete this item?`)">Delete</a>
         </td>
       </tr>
       <% }) %>
     </table>
+  </div>
   </body>
 </html>

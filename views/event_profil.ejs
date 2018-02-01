@@ -2,13 +2,14 @@
 <html>
 <% include ./partials/headUser %>
   <body>
+    <% include ./partials/container %>
     <% if(rowAgendas.length == 0) { %>
-      <h1>You Haven't Events Yet</h1>
-      <a href="/events/add">Create Your Events Here</a><br><br>
-      <a href="/events">Back</a>
+      <h1 class="title is-1 light-blue white-text text-darken-2">You Haven't Events Yet</h1>
+      <a class="button is-primary is-rounded" href="/events/add">Create Your Events Here</a><br><br>
+      <a class="button is-link is-rounded" href="/events">Back</a>
     <% } else { %>
-      <h1>Your Events</h1>
-      <table border="1">
+      <h1 class="title is-1 light-blue white-text text-darken-2">Your Events</h1>
+      <table class="striped" border="1">
         <tr>
           <th>NO</th>
           <th>NAME</th>
@@ -43,12 +44,40 @@
             </ol>
           </td>
           <td>
-            <a href="/events/profile/edit/<%= agenda.id %>">Edit</a>
-            <a href="/events/profile/delete/<%= agenda.id %>" onclick="return confirm (`Are you sure to delete this item?`)">Delete</a>
+            <a class="button is-link is-rounded" href="/events/profile/edit/<%= agenda.id %>">Edit</a>
+            <a class="button is-danger is-rounded" href="/events/profile/delete/<%= agenda.id %>" onclick="return confirm (`Are you sure to delete this item?`)">Delete</a>
           </td>
         </tr>
         <% }) %>
       </table>
     <% } %>
+    <% if(personAgenda) { %>
+    <h4 class="title is-1 light-green white-text text-darken-2">Your Joinned Events</h4>
+    <table>
+      <tr>
+        <th>NO</th>
+        <th>NAME</th>
+        <th>CITY</th>
+        <th>DATE</th>
+        <th>TIME</th>
+        <th>PLAYER NEEDS</th>
+        <th>STATUS</th>
+      </tr>
+
+      <% let counter = 1 %>
+      <% personAgenda.Agendas.forEach(event => { %>
+      <tr>
+        <td><%= counter++ %></td>
+        <td><%= event.name %></td>
+        <td><%= event.place %></td>
+        <td><%= event.date %></td>
+        <td><%= event.time %></td>
+        <td><%= event.max_player %></td>
+        <td>WAITING</td>
+      </tr>
+      <% }) %>
+    </table>
+    <% } %>
+  </div>
   </body>
 </html>
