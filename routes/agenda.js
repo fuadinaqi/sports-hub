@@ -22,7 +22,7 @@ router.get('/', (req, res) => {
       rowAgendas.forEach(agenda => {
         if (agenda.max_player == 0) {
           full = true
-        }        
+        }
         let obj = {}
         Person.findById(agenda.hostId)
         .then(dataPerson => {
@@ -116,7 +116,25 @@ router.post('/edit/:id', (req, res) => {
     res.redirect('/agendas')
   })
   .catch(err => {
-    res.send(err)
+    let id = req.params.id
+    Agenda.findById(id)
+    .then(dataAgenda => {
+      SportList.findAll()
+      .then(dataSports => {
+        res.render('agenda_edit', {
+          dataAgenda : dataAgenda,
+          dataSports : dataSports,
+          today      : thisDay,
+          err        : err.message
+        })
+      })
+      .catch(err => {
+        res.send(err)
+      })
+    })
+    .catch(err => {
+      res.send(err)
+    })
   })
 })
 

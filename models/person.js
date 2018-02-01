@@ -6,7 +6,6 @@ module.exports = (sequelize, DataTypes) => {
     name: {
       type      : DataTypes.STRING,
       validate  : {
-        isAlpha   : {msg: `should be filled with letter`},
         isNull(value, next) {
           if(value.length == 0) {
             next(`Name should be filled`)
@@ -19,7 +18,6 @@ module.exports = (sequelize, DataTypes) => {
     location: {
       type      : DataTypes.STRING,
       validate  : {
-        isAlpha   : {msg: `should be filled with letter`},
         isNull(value, next) {
           if(value.length == 0) {
             next(`Location should be filled`)
@@ -39,12 +37,27 @@ module.exports = (sequelize, DataTypes) => {
           } else {
             next()
           }
+        },
+        isUnique(value, next) {
+         Person.findAll({
+           where:
+             {
+               email: this.email.toLowerCase(),
+               id: { [sequelize.Op.ne]: this.id }
+             }
+         })
+         .then(function (result) {
+           if (result == null || result.length == 0) {
+             return next()
+           } else {
+             return next(`${result[0].email} sudah terdaftar`)
+           }
+         })
         }
       }
     },
     sport_interest: {
       type      : DataTypes.STRING,
-      isAlpha   : {msg: `should be filled with letter`},
       validate  : {
         isNull(value, next) {
           if(value.length == 0) {
@@ -84,8 +97,5 @@ module.exports = (sequelize, DataTypes) => {
       dataPerson.password = hash
     });
   })
-
-
-
   return Person;
 };
