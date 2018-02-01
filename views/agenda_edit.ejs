@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+  <% include ./partials/head %>
+  <body>
+    <% include ./partials/container %>
+    <h1>Edit Agenda</h1>
+    <% include ./partials/error %>
+    <form action="/agendas/edit/<%= dataAgenda.id %>" method="post">
+      <label for="name">Name : </label>
+      <input type="text" name="name" value="<%= dataAgenda.name %>" placeholder=""><br>
+      <label for="place">City : </label>
+      <input type="text" name="place" value="<%= dataAgenda.place %>" placeholder=""><br>
+      <label for="date">Date : </label>
+      <input type="date" name="date" min="<%= today %>" value="<%= dataAgenda.date %>" placeholder=""><br>
+      <label for="time">Time : </label>
+      <input type="time" name="time" value="<%= dataAgenda.time %>" placeholder=""><br>
+      <label for="max_player">Player Needs : </label>
+      <input type="number" name="max_player" min="1" value="<%= dataAgenda.max_player %>" placeholder=""><br>
+      <label for="SportList">Sport : </label>
+      <select name="sportListId">
+        <%dataSports.forEach(sport => {%>
+          <% if(sport.id == dataAgenda.SportListId) { %>
+            <option value="<%= sport.id %>" selected><%= sport.name %></option>
+          <% } else { %>
+            <option value="<%=sport.id%>"><%=sport.name%>
+          </option>
+          <% } %>
+        <%})%>
+      </select><br>
+      <input type="submit" name="" value="edit">
+    </form>
+  </div>
+  </body>
+</html>

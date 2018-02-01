@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script type="text/javascript">
+      $(document).ready(function() {
+        $('select').material_select();
+      });
+    </script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.6.2/css/bulma.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/css/materialize.css" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/js/materialize.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/js/materialize.min.js"></script>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  </head>
+  <body>
+    <% include ./partials/container %>
+    <div class="row">
+      <h1 class="title is-1 light-blue white-text text-darken-2">Register</h1>
+    </div>
+    <% include ./partials/error %>
+    <form class="col s12" action="/signUp" method="post">
+      <div class="row">
+          <div class="row">
+            <div class="input-field col s6">
+              <input name="email" placeholder="example@fuadhi.com" id="first_name" type="email" class="validate">
+              <label for="first_name">Email</label>
+            </div>
+          </div>
+          <div class="row">
+            <div class="input-field col s6">
+              <input name="password" placeholder="please be unique!" id="first_name" type="password" class="validate">
+              <label for="first_name">Password</label>
+            </div>
+          </div>
+          <div class="row">
+            <div class="input-field col s6">
+              <input name="name" placeholder="Just your full name" id="first_name" type="text" class="validate">
+              <label for="first_name">Full Name</label>
+            </div>
+          </div>
+          <div class="row">
+            <div class="input-field col s6">
+              <input name="location" placeholder="where you lived" id="first_name" type="text" class="validate">
+              <label for="first_name">City</label>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="input-field col s12">
+              <select name="sportName">
+                <%rowSportList.forEach(sport => {%>
+                  <option value="<%=sport.name%>"><%=sport.name%>
+                  </option>
+                <%})%>
+              </select>
+              <label for="sport_interest">Sport Interest : </label>
+            </div>
+          </div>
+          <div class="row">
+            <div class="input-field col s6">
+              <input name="phone" placeholder="Phone" id="first_name" type="text" class="validate">
+              <label for="first_name">Phone</label>
+            </div>
+          </div>
+      <input class="button is-primary" type="submit" name="" value="register">
+      <a class="button is-link" href="/login">back</a>
+    </form>
+  </div>
+  </body>
+</html>

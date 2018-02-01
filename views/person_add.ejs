@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+  <% include ./partials/head %>
+  <body>
+    <% include ./partials/container %>
+    <h1 class="title is-1 light-blue white-text text-darken-2">Add Person</h1>
+    <% include ./partials/error %>
+    <form class="col s12" action="/people/add" method="post">
+      <div class="row">
+        <div class="input-field col s6">
+          <input name="name" id="last_name" type="text" class="validate">
+          <label for="last_name">Name</label>
+        </div>
+      </div>
+      <div class="row">
+        <div class="input-field col s6">
+          <input name="location" id="last_name" type="text" class="validate">
+          <label for="last_name">City</label>
+        </div>
+      </div>
+      <div class="row">
+        <div class="input-field col s6">
+          <input name="email" id="last_name" type="email" class="validate">
+          <label for="last_name">Email</label>
+        </div>
+      </div>
+      <div class="row">
+        <div class="input-field col s6">
+          <input name="password" id="last_name" type="password" class="validate">
+          <label for="last_name">Password</label>
+        </div>
+      </div>
+      <div class="row">
+        <div class="input-field col s6">
+          <input name="sport_interest" id="last_name" type="text" class="validate">
+          <label for="last_name">Sport Interest</label>
+        </div>
+      </div>
+      <div class="row">
+        <div class="input-field col s6">
+          <input name="phone" id="last_name" type="text" class="validate">
+          <label for="last_name">Phone</label>
+        </div>
+      </div>
+      <div class="row">
+        <input class="button is-primary" type="submit" name="" value="submit">
+      </div>
+    </form>
+  </div>
+  </body>
+</html>

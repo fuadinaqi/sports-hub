@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+  <% include ./partials/headUser %>
+  <body>
+    <% include ./partials/container %>
+    <h1 class="title is-1 light-blue white-text text-darken-2">Events</h1>
+    <h4 class="title is-3 light-green white-text text-darken-2">Hallo <%= dataPerson.name %>, make your agenda or join here :)</h4>
+    <a class="button is-primary" href="/events/add">Create Your Agenda</a>
+    <br><br><br><br><br>
+    <form action="/events/search" method="post">
+      <label for="">Search by City</label><br>
+      <input type="text" name="search" placeholder="search by city" value=""><br>
+      <label for="">Search by Date</label><br>
+      <input type="date" name="date" value=""><br>
+      <label for="">Search by Sport Interest</label><br>
+      <select name="sportListId">
+        <%rowSportList.forEach(sport => {%>
+          <option value="<%=sport.id%>"><%=sport.name%>
+          </option>
+        <%})%>
+      </select><br>
+      <input class="button is-primary" type="submit" value="search">
+    </form><br>
+    <% if(notThere) { %>
+      <p>Mohon maaf data yang anda butuhkan tidak tersedia</p>
+    <% } %>
+    <table class="striped">
+      <tr>
+        <th>NO</th>
+        <th>BOOKING ID</th>
+        <th>NAME</th>
+        <th>CITY</th>
+        <th>DATE</th>
+        <th>TIME</th>
+        <th>PLAYER NEEDS</th>
+        <th>SPORT</th>
+        <th>ACTION</th>
+      </tr>
+      <% if (agendaPlaces == false) { %>
+        <% include ./partials/event %>
+      <% } else {%>
+      <% include ./partials/eventBySearch %>
+      <% } %>
+    </table>
+    <a class="button is-primary is-rounded"href="/events/profile">Your Events</a>
+  </div>
+  </body>
+</html>

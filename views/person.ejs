@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+  <% include ./partials/head %>
+  <body>
+    <% include ./partials/container %>
+    <h2 class="title is-1 light-blue white-text text-darken-2">People</h2>
+    <a class="button is-link" href="/people/add">Add Person</a>
+    <br><br>
+    <table class="striped">
+      <tr>
+        <th>NO</th>
+        <th>ID</th>
+        <th>NAME</th>
+        <th>CITY</th>
+        <th>EMAIL</th>
+        <th>SPORTS INTEREST</th>
+        <th>PHONE</th>
+        <th>AGENDA</th>
+        <th>ACTION</th>
+      </tr>
+
+      <% let count = 1 %>
+      <% rowPeople.forEach(person => { %>
+      <tr>
+        <td><%= count++ %></td>
+        <td><%= person.id %></td>
+        <td><%= person.name %></td>
+        <td><%= person.location %></td>
+        <td><%= person.email %></td>
+        <td><%= person.sport_interest %></td>
+        <td><%= person.phone %></td>
+        <td>
+          <ol>
+            <% person.Agendas.forEach(agenda => {%>
+              <li>
+                <%= agenda.name %>
+              </li>
+          <%})%>
+          </ol>
+        <td>
+          <a class="button is-link" href="/people/edit/<%= person.id  %>">Edit</a><br><br>
+          <a class="button is-danger" href="/people/delete/<%= person.id %>" onclick="return confirm (`Are you sure to delete this data?`)">Delete</a>
+        </td>
+      </tr>
+      <% }) %>
+    </table>
+  </div>
+  </body>
+</html>

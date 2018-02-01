@@ -1,0 +1,79 @@
+<% let countConjunction = 0 %>
+<% let count = 1 %>
+<% agendaPlaces.forEach(agenda => { %>
+  <% if(agenda.date > JSON.stringify(new Date()).substr(1,10)) { %>
+<tr>
+  <td><%= count++ %></td>
+  <td><%= agenda.getBookingId() %></td>
+  <td><%= agenda.name %></td>
+  <td><%= agenda.place %></td>
+  <td><%= agenda.date %></td>
+  <td><%= agenda.time %></td>
+  <td><%= agenda.max_player %></td>
+  <% if(agenda.SportList) {%>
+  <td><%= agenda.SportList.name %></td>
+  <% } else { %>
+  <td></td>
+  <% } %>
+  <td>
+    <form action="/events/join" method="post">
+      <input type="hidden" name="AgendaId" value="<%= agenda.id %>">
+      <input type="hidden" name="PersonId" value="<%= dataPerson.idPerson %>">
+      <% if(rowPeopleAgendas.length > 0) {%>
+        <% rowPeopleAgendas.find(conjunction => { %>
+            <% if(conjunction.AgendaId == agenda.id && conjunction.PersonId == dataPerson.idPerson) { %>
+              <% countConjunction++ %>
+            <% } %>
+          <% }) %>
+        <% } %>
+        <% if(countConjunction == 1) { %>
+          <p>Waiting</p>
+          <% countConjunction = 0 %>
+        <% } else if(countConjunction == 0 && agenda.max_player!=0) { %>
+          <input class="button is-danger is-focused"type="submit" name="" value="JOIN">
+        <% } else if(agenda.max_player == 0) {%>
+          <p>Full Booked</p>
+        <% } %>
+    </form>
+  </td>
+</tr>
+  <% } else if (agenda.time >= recentTime && agenda.date == JSON.stringify(new Date()).substr(1,10)) { %>
+    <tr>
+      <td><%= count++ %></td>
+      <td><%= agenda.getBookingId() %></td>
+      <td><%= agenda.name %></td>
+      <td><%= agenda.place %></td>
+      <td><%= agenda.date %></td>
+      <td><%= agenda.time %></td>
+      <td><%= agenda.max_player %></td>
+      <% if(agenda.SportList) {%>
+      <td><%= agenda.SportList.name %></td>
+      <% } else { %>
+      <td></td>
+      <% } %>
+      <td>
+        <form action="/events/join" method="post">
+          <input type="hidden" name="AgendaId" value="<%= agenda.id %>">
+          <input type="hidden" name="PersonId" value="<%= dataPerson.idPerson %>">
+          <% if(rowPeopleAgendas.length > 0) {%>
+            <% rowPeopleAgendas.find(conjunction => { %>
+                <% if(conjunction.AgendaId == agenda.id && conjunction.PersonId == dataPerson.idPerson) { %>
+                  <% countConjunction++ %>
+                <% } %>
+              <% }) %>
+            <% } %>
+            <% if(countConjunction == 1) { %>
+              <p>Waiting</p>
+              <% countConjunction = 0 %>
+            <% } else if(countConjunction == 0 && agenda.max_player!=0) { %>
+              <input class="button is-danger is-focused" type="submit" name="" value="JOIN">
+            <% } else if(agenda.max_player == 0) {%>
+              <p>Full Booked</p>
+            <% } %>
+        </form>
+      </td>
+    </tr>
+  <% } %>
+<% }) %>
+
+<a class="button is-link" href="/events"> << back </a>

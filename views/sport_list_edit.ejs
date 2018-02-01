@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html>
+  <% include ./partials/head %>
+  <body>
+    <% include ./partials/container %>
+    <h1>Edit Agenda</h1>
+    <% include ./partials/error %>
+    <form action="/sport_lists/edit/<%= dataSportList.id %>" method="post">
+      <label for="name">Sport's Name : </label>
+      <input type="text" name="name" value="<%= dataSportList.name %>" placeholder="">
+      <input type="submit" name="" value="edit">
+    </form>
+  </div>
+  </body>
+</html>

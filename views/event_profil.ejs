@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+<% include ./partials/headUser %>
+  <body>
+    <% include ./partials/container %>
+    <% if(rowAgendas.length == 0) { %>
+      <h1 class="title is-1 light-blue white-text text-darken-2">You Haven't Events Yet</h1>
+      <a class="button is-primary is-rounded" href="/events/add">Create Your Events Here</a><br><br>
+      <a class="button is-link is-rounded" href="/events">Back</a>
+    <% } else { %>
+      <h1 class="title is-1 light-blue white-text text-darken-2">Your Events</h1>
+      <table class="striped" border="1">
+        <tr>
+          <th>NO</th>
+          <th>NAME</th>
+          <th>CITY</th>
+          <th>DATE</th>
+          <th>TIME</th>
+          <th>PLAYER NEEDS</th>
+          <th>SPORT</th>
+          <th>PLAYER LISTS</th>
+          <th>ACTION</th>
+        </tr>
+
+        <% let count = 1 %>
+        <% rowAgendas.forEach(agenda => { %>
+        <tr>
+          <td><%= count++ %></td>
+          <td><%= agenda.name %></td>
+          <td><%= agenda.place %></td>
+          <td><%= agenda.date %></td>
+          <td><%= agenda.time %></td>
+          <td><%= agenda.max_player %></td>
+          <% if(agenda.SportList) {%>
+          <td><%= agenda.SportList.name %></td>
+          <% } else { %>
+            <td></td>
+            <% } %>
+          <td>
+            <ol>
+              <% agenda.People.forEach(person => { %>
+                <li><%= person.name + ' (' + person.phone + ')' %></li>
+              <% }) %>
+            </ol>
+          </td>
+          <td>
+            <a class="button is-link is-rounded" href="/events/profile/edit/<%= agenda.id %>">Edit</a>
+            <a class="button is-danger is-rounded" href="/events/profile/delete/<%= agenda.id %>" onclick="return confirm (`Are you sure to delete this item?`)">Delete</a>
+          </td>
+        </tr>
+        <% }) %>
+      </table>
+    <% } %>
+    <% if(personAgenda) { %>
+    <h4 class="title is-1 light-green white-text text-darken-2">Your Joinned Events</h4>
+    <table>
+      <tr>
+        <th>NO</th>
+        <th>NAME</th>
+        <th>CITY</th>
+        <th>DATE</th>
+        <th>TIME</th>
+        <th>PLAYER NEEDS</th>
+        <th>STATUS</th>
+      </tr>
+
+      <% let counter = 1 %>
+      <% personAgenda.Agendas.forEach(event => { %>
+      <tr>
+        <td><%= counter++ %></td>
+        <td><%= event.name %></td>
+        <td><%= event.place %></td>
+        <td><%= event.date %></td>
+        <td><%= event.time %></td>
+        <td><%= event.max_player %></td>
+        <td>WAITING</td>
+      </tr>
+      <% }) %>
+    </table>
+    <% } %>
+  </div>
+  </body>
+</html>

@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<% include ./partials/headUser %>
+  <body>
+    <% include ./partials/container %>
+    <h1 class="title is-1 light-blue white-text text-darken-2">Create Event</h1>
+    <% include ./partials/error %>
+    <form action="/events/add" method="post">
+      <label for="name">Name : </label>
+      <input type="text" name="name" value="" placeholder=""><br>
+      <label for="place">City : </label>
+      <input type="text" name="place" value="" placeholder=""><br>
+      <label for="date">Date : </label>
+      <input type="date" name="date" value="" min="<%= today%>" laceholder=""><br>
+      <label for="time">Time : </label>
+      <input type="time" name="time" value="" placeholder=""><br>
+      <label for="max_player">Player Needs : </label>
+      <input type="number" name="max_player" min="1" value="" placeholder=""><br>
+      <label for="SportList">Sport : </label>
+      <select name="sportListId">
+        <%rowSportList.forEach(sport => {%>
+          <option value="<%=sport.id%>"><%=sport.name%>
+          </option>
+        <%})%>
+      </select><br>
+      <input class="button is-primary" type="submit" name="" value="submit">
+    </form>
+  </div>
+  </body>
+</html>
