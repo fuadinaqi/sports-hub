@@ -89,5 +89,11 @@ module.exports = (sequelize, DataTypes) => {
     // Agenda.hasMany(models.PeopleAgendas)
     // Agenda.hasMany(models.PeopleAgendas)
   };
+  Agenda.prototype.getBookingId = function () {
+    let bookingId = `${this.date}${this.id}`
+    return bookingId.split('-').join('/')
+  }
+
+  Agenda.before
   return Agenda;
 };

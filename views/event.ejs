@@ -9,6 +9,7 @@
     <table border="1">
       <tr>
         <th>NO</th>
+        <th>BOOKING ID</th>
         <th>NAME</th>
         <th>PLACE</th>
         <th>DATE</th>
@@ -23,6 +24,7 @@
       <% rowAgendas.forEach(agenda => { %>
       <tr>
         <td><%= count++ %></td>
+        <td><%= agenda.getBookingId() %></td>
         <td><%= agenda.name %></td>
         <td><%= agenda.place %></td>
         <td><%= agenda.date %></td>
